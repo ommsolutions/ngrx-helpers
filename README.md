@@ -1,27 +1,46 @@
-# NgrxHelpers
+# ngrx-helpers
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.6.
+## TL;DR
 
-## Development server
+This package can be used to reduce the amount of boilerplate code you have to write using ngrx.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
+TODO
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+TODO
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+This package provides helpers for:
+* effects
+* reducers
+* actions
 
-## Running unit tests
+### All of it!
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+TODO
 
-## Running end-to-end tests
+### Custom usages
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+TODO
 
-## Further help
+## example-app
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+For development, we use the [example-app](./example-app) generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.6.
+In this project, you can find the various use cases of the library and how example configurations might look like.
+As the project evolves, we will try to keep up with the latest angular-cli and ngrx releases to ensure compatibility.
+
+**For development**
+* Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Action type pattern
+
+TODO
+
+## Contribute
+
+Feel free to create create issues for bugs, new features, questions and so on ;-)
+If you want to add your own features, go ahead and create a pull-request. we appreciate it!

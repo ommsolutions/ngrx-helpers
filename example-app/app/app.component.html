@@ -1,0 +1,12 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+    <h1>
+        Welcome to {{ title }}!
+    </h1>
+
+    <button (click)="loadStudents()">Load Students</button>
+    <h2>Students</h2>
+    <div *ngFor="let student of students | async">
+        <div>{{student.lastName}}, {{student.firstName}}</div>
+    </div>
+</div>
