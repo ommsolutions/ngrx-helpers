@@ -21,9 +21,9 @@ export class EffectHelperService {
 
     /**
      * Adds default ngrx ofType selector for all action types provided.
-     * @param {{new(): action}} actionClass The ActionClass which should be handled (extending GenericAction).
-     * @param {GenericActionTypes | GenericActionTypes[]} actionTypes One or more action types which should be handled.
-     * @return {OperatorFunction<Action, Action>} The generated ofType selector.
+     * @param actionClass The ActionClass which should be handled (extending GenericAction).
+     * @param actionTypes One or more action types which should be handled.
+     * @return The generated ofType selector.
      */
     selectAction<action extends GenericAction>(actionClass: new () => action,
                                                actionTypes: GenericActionTypes | GenericActionTypes[]): OperatorFunction<Action, Action> {
@@ -48,8 +48,8 @@ export class EffectHelperService {
 
     /**
      * Creates the success action for the specified actionClass and actionType.
-     * @param {{new(): action}} actionClass The action class which specifies the base action type.
-     * @return {OperatorFunction<any, Action>} The generated map statement, mapping the input response to a success action.
+     * @param actionClass The action class which specifies the base action type.
+     * @return The generated map statement, mapping the input response to a success action.
      */
     handleSuccessResponse<action extends GenericAction>(actionClass: new () => action): OperatorFunction<any, Action> {
         return map(({response, actionType}) => ({
@@ -60,8 +60,8 @@ export class EffectHelperService {
 
     /**
      * Creates the error action for the specified actionClass and actionType.
-     * @param {{new(): action}} actionClass The action class which specifies the base action type.
-     * @return {OperatorFunction<Action, Action>}
+     * @param actionClass The action class which specifies the base action type.
+     * @return res
      */
     handleErrorResponse<action extends GenericAction>(actionClass: new () => action): OperatorFunction<Action, Action> {
         return catchError((err: any) => of({
@@ -76,9 +76,9 @@ export class EffectHelperService {
      * skipSuccessHandling: boolean = false,
      * skipExecuteRequest: boolean = false
 
-     * @param {{new(): action}} actionClass
-     * @param {GenericActionTypes} actionType
-     * @return {OperatorFunction<Action, Action>}
+     * @param actionClass
+     * @param actionType
+     * @return
      */
     handle<action extends GenericAction>(actionClass: new () => action,
                                          actionType: GenericActionTypes): OperatorFunction<Action, Action> {

@@ -11,11 +11,11 @@ export class NgrxHelpersUtils {
     /**
      * Get an actionInstance with the correct type and payload, based on the actionclass and the actionType
      *
-     * @param {{new(): action}} actionClass
-     * @param {GenericActionTypes} actionType
-     * @param {P} payload
-     * @param {boolean} onlyType If true, ignores payload and just returns the type property.
-     * @return {Action}
+     * @param actionClass
+     * @param actionType
+     * @param payload
+     * @param onlyType If true, ignores payload and just returns the type property.
+     * @return Action
      */
     public static createActionInstance<action extends GenericAction, P>(actionClass: new () => action,
                                                                         actionType: GenericActionTypes,

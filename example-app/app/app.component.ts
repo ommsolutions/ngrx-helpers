@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {select, Store} from "@ngrx/store";
+import {StoreHelperService} from "ngrx-helpers";
 
 import {getStudentList, IState} from "./reducers";
 import {StudentsAction} from "./actions/students.action";
-import {StoreHelperService} from "../../src";
 
 
 @Component({

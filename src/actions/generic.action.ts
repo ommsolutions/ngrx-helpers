@@ -1,6 +1,7 @@
 export type GenericActionTypes = "LoadAll" | "LoadOne" | "CreateOne" | "UpdateOne" | "DeleteOne";
 export type GenericActionTypesVariants = "success" | "error" | "default";
 
+// TODO: implement
 // export type IValidatorFunction = <P>(payload: P) => boolean;
 
 const DEFAULT_SUPPORTED_ACTION_TYPES: GenericActionTypes[] = ["LoadAll", "LoadOne", "CreateOne", "UpdateOne", "DeleteOne"];
@@ -19,6 +20,7 @@ export abstract class GenericAction {
     abstract actionName: string;
     resourcePath: string;
     supportedActionTypes: GenericActionTypes[] = DEFAULT_SUPPORTED_ACTION_TYPES;
+    // TODO: implement
     // payloadValidators: Map<GenericActionTypes, IValidatorFunction> = new Map()
     //     .set("LoadOne", (payload) => payload.id != null);
 
@@ -105,6 +107,7 @@ export abstract class GenericAction {
         return `${actionType} error`;
     }
 
+    // TODO: implement
     /*    public validatePayload<P>(actionType: GenericActionTypes, payload: P): boolean {
             if (this.payloadValidators == null || this.payloadValidators.get(actionType) == null) {
                 // there are no validators at all or not a specific one for the actionType

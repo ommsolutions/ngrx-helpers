@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
+import {Action} from "@ngrx/store";
 import {Actions, Effect} from "@ngrx/effects";
 import {Observable} from "rxjs/Observable";
-import {Action} from "@ngrx/store";
-import {DataService} from "../services/data.service";
+import {EffectHelperService} from "ngrx-helpers";
+
+import {DataService} from "../services";
 import {StudentsAction} from "../actions/students.action";
-import {EffectHelperService} from "../../../src";
 
 @Injectable()
 export class StudentsEffect {

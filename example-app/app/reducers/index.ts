@@ -1,7 +1,7 @@
 import {ActionReducerMap, createSelector, createFeatureSelector, ActionReducer, MetaReducer} from "@ngrx/store";
-import {environment} from "../../environments/environment";
 import {storeFreeze} from "ngrx-store-freeze";
 
+import {environment} from "../../environments/environment";
 import * as fromStudents from "./students";
 
 export interface IState {

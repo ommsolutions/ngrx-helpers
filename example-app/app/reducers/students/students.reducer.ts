@@ -1,5 +1,6 @@
+import {ExtendedAction, ReducerHelper} from "ngrx-helpers";
+
 import {StudentsAction} from "../../actions/students.action";
-import {ExtendedAction, ReducerHelper} from "../../../../src";
 
 export interface IStudent {
     id: number;

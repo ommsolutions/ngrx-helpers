@@ -1,0 +1,32 @@
+{
+    "$schema": "../../node_modules/ng-packagr/package.schema.json",
+    "name": "@omm/ngrx-helpers",
+    "version": "0.1.0-alpha.2",
+    "description": "Provides helpers simplifying usage of ngrx.",
+    "homepage": "https://github.com/ommsolutions/ngrx-helpers",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:ommsolutions/ngrx-helpers.git"
+    },
+    "license": "MIT",
+    "author": "Andreas Enenkel <ae@omm-solutions.de>",
+    "keywords": [
+        "rxjs",
+        "ngrx",
+        "angular"
+    ],
+    "scripts": {
+    },
+    "peerDependencies": {
+        "@angular/common": "^5.2.0",
+        "@angular/core": "^5.2.0",
+        "@ngrx/effects": "^5.0.1",
+        "@ngrx/store": "^5.0.0"
+    },
+    "ngPackage": {
+        "lib": {
+            "entryFile": "public_api.ts"
+        },
+        "dest": "../dist/ngrx-helpers"
+    }
+}

@@ -1,4 +1,4 @@
-import {GenericAction} from "../../../src";
+import {GenericAction} from "ngrx-helpers";
 
 export class StudentsAction extends GenericAction {
     public actionName = "Students";
