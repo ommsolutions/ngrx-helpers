@@ -4,55 +4,56 @@ export type GenericActionTypesVariants = "success" | "error" | "default";
 // TODO: implement
 // export type IValidatorFunction = <P>(payload: P) => boolean;
 
-const DEFAULT_SUPPORTED_ACTION_TYPES: GenericActionTypes[] = ["LoadAll", "LoadOne", "CreateOne", "UpdateOne", "DeleteOne"];
-
 /**
  * Superclass which has to be extended by all action classes managed by this library.
  * Extending class must provide:
- *  - "actionName"
+ *  - "resourceDefinition"
  *
  *  Extending class can optionally provide:
  *  - "resourcePath" -> Required when using the ngrx-rest-data.service
  *  - "supportedActionTypes" -> Adds limitation to specific action types. By default, all action types are permitted.
  *  - "payloadValidators" -> Adds validators for each action type if specified, to check payload for validity.
  */
-export abstract class GenericAction {
-    abstract actionName: string;
-    resourcePath: string;
-    supportedActionTypes: GenericActionTypes[] = DEFAULT_SUPPORTED_ACTION_TYPES;
+// TODO: merge with ngrx entity
+export class GenericAction {
     // TODO: implement
     // payloadValidators: Map<GenericActionTypes, IValidatorFunction> = new Map()
     //     .set("LoadOne", (payload) => payload.id != null);
+    actionName: string;
+    resourcePath?: string;
+    supportedActionTypes?: GenericActionTypes[];
 
     private get loadAllType(): string {
         return `[${this.actionName}] Load all`;
     }
 
     private get loadOneType(): string {
-        return `${this.actionName}] Load one`;
+        return `[${this.actionName}] Load one`;
     }
 
     private get createOneType(): string {
-        return `${this.actionName}] Create one`;
+        return `[${this.actionName}] Create one`;
     }
 
     private get updateOneType(): string {
-        return `${this.actionName}] Update one`;
+        return `[${this.actionName}] Update one`;
     }
 
     private get deleteOneType(): string {
-        return `${this.actionName}] Delete one`;
+        return `[${this.actionName}] Delete one`;
     }
 
+    // TODO: comment
     public getActionType(type: GenericActionTypes, variant: GenericActionTypesVariants = "default"): string {
 
         /**
          * Check integrity of action class.
-         *  - actionName must be provided
+         *  - resourceDefinition must be provided
          *  - type must not be null
          *  - if a supportedActionTypes array is provided, it has to contain the provided type
          */
         if (!this.actionName) {
+            // TODO: log message how this can be avoided -> use decorator
             throw new Error(`Please add the attribte 'actionName' to your custom action before using it`);
         }
 
@@ -63,7 +64,7 @@ export abstract class GenericAction {
 
         if (this.supportedActionTypes && this.supportedActionTypes.indexOf(type) === -1) {
             throw new Error(`The provided type is not supported by this action class, provided types are:
-            ${this.supportedActionTypes}`);
+            ${this.supportedActionTypes.join(",")}`);
         }
 
         /**

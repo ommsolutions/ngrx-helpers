@@ -8,6 +8,7 @@ export class ExtendedAction<P> implements Action {
 }
 
 export class NgrxHelpersUtils {
+
     /**
      * Get an actionInstance with the correct type and payload, based on the actionclass and the actionType
      *
@@ -31,4 +32,26 @@ export class NgrxHelpersUtils {
 
         return {type, actionType, payload};
     }
+}
+
+/**
+ *
+ *
+ * @param path
+ * @param name
+ * @param supportedActionTypes
+ */
+export function resourceDefinition(name: string,
+                                   path?: string,
+                                   supportedActionTypes?: GenericActionTypes[]) {
+    return function decorator<T extends { new(...args: any[]): GenericAction }>(resourceClass: T): T {
+        // TODO: check if this can be typechecked.
+        class DefinedResourceClass extends resourceClass {
+            actionName = name;
+            resourcePath = path;
+            supportedActionTypes = supportedActionTypes;
+        }
+
+        return DefinedResourceClass;
+    };
 }

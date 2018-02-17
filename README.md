@@ -82,6 +82,8 @@ TODO:
 * Add e2e tests
 * Add coverage report via CI
 * Design example app
+* Use decorators to configure resource entities
+
 
 Bugfixes:
 

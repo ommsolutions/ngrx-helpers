@@ -80,7 +80,7 @@ export class EffectHelperService {
      * @param actionType
      * @return
      */
-    handle<action extends GenericAction>(actionClass: new () => action,
+    handle<action extends GenericAction>(actionClass: {new(): action},
                                          actionType: GenericActionTypes): OperatorFunction<Action, Action> {
         return pipe(
             this.selectAction(actionClass, actionType),
