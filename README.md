@@ -3,7 +3,7 @@
 
 > This package can be used to reduce the amount of boilerplate code you have to write using ngrx.
 
-## Installation and Prerequisites
+## Installation and Prerequisites/Dependencies
 
 Install by using ``npm install --save @omm/ngrx-helpers``
 
@@ -18,6 +18,8 @@ This package provides helpers for:
 * effects
 * reducers
 * actions
+
+### Config
 
 ### All of it!
 

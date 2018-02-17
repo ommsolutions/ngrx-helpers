@@ -28,7 +28,7 @@ import {DataService} from "./services";
             logOnly: environment.production
         }),
         EffectsModule.forRoot([StudentsEffect]),
-        NgrxHelpersModule.forRoot()
+        NgrxHelpersModule.forRoot({apiBasePath: "http://localhost:3000"})
     ],
     providers: [DataService],
     bootstrap: [AppComponent]

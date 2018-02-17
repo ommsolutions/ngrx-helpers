@@ -1,6 +1,6 @@
 import {GenericAction} from "ngrx-helpers";
 import {resourceDefinition} from "../../../src/utils";
 
-@resourceDefinition("Students", "/students", ["LoadAll"])
+@resourceDefinition("Students", "/students")
 export class StudentsAction extends GenericAction {
 }
