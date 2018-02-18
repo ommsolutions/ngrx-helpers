@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
-import {GenericActionTypes} from "@omm/ngrx-helpers";
 
-import {GenericAction} from "../actions";
+import {GenericAction, GenericActionTypes} from "../actions";
 import {NgrxHelpersUtils} from "../utils";
 
 export interface IDispatchOptions {
