@@ -1,7 +1,4 @@
 <div>
-    <button mat-raised-button color="primary" (click)="loadStudents()">Load Students</button>
-    <h2>Students</h2>
-    <div *ngFor="let student of students | async">
-        <div>{{student.lastName}}, {{student.firstName}}</div>
-    </div>
+    <h2>Home</h2>
+    <button mat-raised-button color="primary" (click)="goToPlants()">See all plants</button>
 </div>

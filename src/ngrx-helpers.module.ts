@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from "@angular/core";
-import {RestHelperService, StoreHelperService} from "./services";
+import {RestHelperService, DispatchService} from "./services";
 import {EffectHelperService} from "./effects";
 import {ROOT_MODULE_CONFIG} from "./tokens";
 
@@ -15,7 +15,7 @@ export class NgrxHelpersModule {
         return {
             ngModule: NgrxHelpersModule,
             providers: [
-                StoreHelperService,
+                DispatchService,
                 EffectHelperService,
                 RestHelperService,
                 {

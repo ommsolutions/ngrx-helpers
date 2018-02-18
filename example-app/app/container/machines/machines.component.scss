@@ -1,0 +1,11 @@
+@import "../../../styles";
+
+:host {
+    @extend #app-component;
+}
+
+#machineTable {
+    @extend #app-component;
+    max-height: 85vh;
+    overflow-y: auto;
+}

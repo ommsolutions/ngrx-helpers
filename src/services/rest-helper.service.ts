@@ -2,7 +2,7 @@ import {Inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {ROOT_MODULE_CONFIG} from "../tokens";
-import {INgrxHelpersModuleOptions} from "ngrx-helpers";
+import {INgrxHelpersModuleOptions} from "@omm/ngrx-helpers";
 
 @Injectable()
 export class RestHelperService {

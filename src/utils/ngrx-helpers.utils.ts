@@ -1,5 +1,6 @@
 import {GenericAction, GenericActionTypes} from "../actions";
 import {Action} from "@ngrx/store";
+import {EntityAdapter} from "@ngrx/entity";
 
 export class ExtendedAction<P> implements Action {
     readonly type: string;
@@ -34,14 +35,8 @@ export class NgrxHelpersUtils {
     }
 }
 
-/**
- *
- *
- * @param path
- * @param name
- * @param supportedActionTypes
- */
 export function resourceDefinition(name: string,
+                                   entityAdapter: EntityAdapter<any>,
                                    path?: string,
                                    supportedActionTypes?: GenericActionTypes[]) {
     return function decorator<T extends { new(...args: any[]): GenericAction }>(resourceClass: T): T {
@@ -49,6 +44,7 @@ export function resourceDefinition(name: string,
         class DefinedResourceClass extends resourceClass {
             actionName = name;
             resourcePath = path;
+            entityAdapter = entityAdapter;
             supportedActionTypes = supportedActionTypes;
         }
 

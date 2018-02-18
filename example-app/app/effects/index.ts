@@ -1,2 +1,2 @@
 export * from "./router.effects";
-export * from "./students.effect";
+export * from "./plants.effects";

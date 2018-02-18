@@ -3,17 +3,22 @@ import {RouterReducerState} from "@ngrx/router-store/src/router_store_module";
 import {storeFreeze} from "ngrx-store-freeze";
 
 import {environment} from "../../environments/environment";
-import * as fromStudents from "./students";
+import {PlantReducer, PlantState} from "./plants";
+import {MachineReducer, MachineState} from "./machines";
+import * as fromPlantsResource from "../actions/plants.resource";
+import * as fromMachineResource from "../actions/machines.resource";
 import * as fromRouter from "./router";
 
 export interface IState {
-    students: fromStudents.IState;
+    plants: PlantState;
     router: RouterReducerState<fromRouter.RouterStateUrl>;
+    machines: MachineState;
 }
 
 export const reducers: ActionReducerMap<IState> = {
-    students: fromStudents.reducer,
-    router: fromRouter.reducer
+    plants: PlantReducer,
+    router: fromRouter.reducer,
+    machines: MachineReducer
 };
 
 // Log all actions
@@ -30,6 +35,12 @@ export function logger(reducer: ActionReducer<IState>): ActionReducer<IState> {
  */
 export const metaReducers: MetaReducer<IState>[] = !environment.production ? [logger, storeFreeze] : [];
 
-export const getStudentState = createFeatureSelector<fromStudents.IState>("students");
+// Plant state
+export const selectPlantState = createFeatureSelector<PlantState>("plants");
+export const selectAllPlants = createSelector(selectPlantState, fromPlantsResource.selectAll);
 
-export const getStudentList = createSelector(getStudentState, fromStudents.getStudentList);
+export const selectMachineState = createFeatureSelector<MachineState>("machines");
+export const selectAllMachines = createSelector(selectMachineState, fromMachineResource.selectAll);
+export const selectAllMachinesOfPlant = (plantId: number, state: any) =>
+    createSelector(selectMachineState, fromMachineResource.selectAll)(state)
+        .filter(machines => machines.plantId === plantId);

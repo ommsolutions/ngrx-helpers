@@ -20,5 +20,13 @@ export class NavigatorService {
         }));
     }
 
+    public navigateToPlant(id?: number) {
+        let path = `./plants`;
+        if (id != null) {
+            path = `${path}/${id}/machines`;
+        }
+        this.store.dispatch(new RouterActions.Go({path: [path]}));
+    }
+
     // TODO add routes for: lines , machines , search
 }

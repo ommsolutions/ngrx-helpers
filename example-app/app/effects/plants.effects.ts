@@ -2,17 +2,17 @@ import {Injectable} from "@angular/core";
 import {Action} from "@ngrx/store";
 import {Actions, Effect} from "@ngrx/effects";
 import {Observable} from "rxjs/Observable";
-import {EffectHelperService} from "ngrx-helpers";
+import {EffectHelperService} from "@omm/ngrx-helpers";
 
 import {DataService} from "../services";
-import {StudentsAction} from "../actions/students.action";
+import {PlantsResource} from "../actions/plants.resource";
 
 @Injectable()
-export class StudentsEffect {
+export class PlantsEffects {
 
     @Effect()
-    students$: Observable<Action> = this.actions$
-        .pipe(this.effectHelperService.handle(StudentsAction, "LoadAll"));
+    plants$: Observable<Action> = this.actions$
+        .pipe(this.effectHelperService.handle(PlantsResource, "LoadAll"));
 
     constructor(private actions$: Actions,
                 private dataService: DataService,

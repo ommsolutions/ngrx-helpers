@@ -1,2 +1,2 @@
-export * from "./store-helper.service";
+export * from "./dispatch.service";
 export * from "./rest-helper.service";

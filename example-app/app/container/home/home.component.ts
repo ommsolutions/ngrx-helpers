@@ -1,9 +1,8 @@
 import {Component} from "@angular/core";
 import {select, Store} from "@ngrx/store";
-import {StoreHelperService} from "ngrx-helpers";
 
-import {getStudentList, IState} from "../../reducers";
-import {StudentsAction} from "../../actions/students.action";
+import {selectAllPlants, IState} from "../../reducers";
+import {NavigatorService} from "../../services";
 
 @Component({
     selector: "app-home",
@@ -11,13 +10,13 @@ import {StudentsAction} from "../../actions/students.action";
     styleUrls: ["home.component.scss"]
 })
 export class HomeComponent {
-    public students;
+    public plants;
 
-    constructor(private store: Store<IState>, private restHelperService: StoreHelperService) {
-        this.students = this.store.pipe(select(getStudentList));
+    constructor(private store: Store<IState>, private Navigator: NavigatorService) {
+        this.plants = this.store.pipe(select(selectAllPlants));
     }
 
-    loadStudents() {
-        this.restHelperService.getAll(StudentsAction);
+    goToPlants() {
+        this.Navigator.navigateToPlant();
     }
 }

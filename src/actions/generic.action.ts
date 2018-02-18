@@ -1,3 +1,5 @@
+import {EntityAdapter} from "@ngrx/entity";
+
 export type GenericActionTypes = "LoadAll" | "LoadOne" | "CreateOne" | "UpdateOne" | "DeleteOne";
 export type GenericActionTypesVariants = "success" | "error" | "default";
 
@@ -15,11 +17,12 @@ export type GenericActionTypesVariants = "success" | "error" | "default";
  *  - "payloadValidators" -> Adds validators for each action type if specified, to check payload for validity.
  */
 // TODO: merge with ngrx entity
-export class GenericAction {
+export abstract class GenericAction {
     // TODO: implement
     // payloadValidators: Map<GenericActionTypes, IValidatorFunction> = new Map()
     //     .set("LoadOne", (payload) => payload.id != null);
     actionName: string;
+    entityAdapter: EntityAdapter<any>;
     resourcePath?: string;
     supportedActionTypes?: GenericActionTypes[];
 
@@ -41,6 +44,10 @@ export class GenericAction {
 
     private get deleteOneType(): string {
         return `[${this.actionName}] Delete one`;
+    }
+
+    public getEntityAdapter() {
+        return this.entityAdapter;
     }
 
     // TODO: comment

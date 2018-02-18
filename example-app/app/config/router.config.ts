@@ -1,6 +1,8 @@
 import {Routes} from "@angular/router";
 import {HomeComponent} from "../container/home";
 import {ConfigComponent} from "../container/config";
+import {PlantsComponent} from "../container/plants";
+import {MachinesComponent} from "../container/machines";
 
 /**
  * The selector for the router sub state.
@@ -15,6 +17,8 @@ export const ROUTER_CONFIG = {
 export const ROUTES: Routes = [
     {path: "home", component: HomeComponent},
     {path: "config", component: ConfigComponent},
+    {path: "plants", component: PlantsComponent},
+    {path: "plants/:id/machines", component: MachinesComponent},
     {path: "**", component: HomeComponent},
 
 ];

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {INgrxHelpersModuleOptions} from "ngrx-helpers";
+import {INgrxHelpersModuleOptions} from "@omm/ngrx-helpers";
 import {CONFIG, DEFAULT} from "../../config/ngrx-helpers.config";
 import {NavigatorService} from "../../services";
 
