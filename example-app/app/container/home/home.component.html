@@ -1,0 +1,7 @@
+<div>
+    <button mat-raised-button color="primary" (click)="loadStudents()">Load Students</button>
+    <h2>Students</h2>
+    <div *ngFor="let student of students | async">
+        <div>{{student.lastName}}, {{student.firstName}}</div>
+    </div>
+</div>

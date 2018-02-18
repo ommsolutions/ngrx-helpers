@@ -1,0 +1,25 @@
+@import "../../../styles";
+
+#back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.config-container {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+
+    .config {
+        display: flex;
+        margin-top: 2%;
+        flex: 1 1 auto;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+:host {
+    @extend #app-component;
+}

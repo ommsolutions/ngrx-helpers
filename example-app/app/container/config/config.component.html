@@ -1,0 +1,12 @@
+<div class="config-container">
+    <button id="back" mat-icon-button (click)="goBack()">
+        <i class="material-icons">arrow_back</i>
+    </button>
+    <div class="config">
+        <h2>Configuration</h2>
+        <span *ngFor="let key of configKeys">{{key}}
+            - Value: {{config[key]}}
+            - Default: {{default[key] || "no default value"}}
+        </span>
+    </div>
+</div>

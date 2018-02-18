@@ -1,26 +1,18 @@
 import {Component} from "@angular/core";
-import {select, Store} from "@ngrx/store";
-import {StoreHelperService} from "ngrx-helpers";
-
-import {getStudentList, IState} from "./reducers";
-import {StudentsAction} from "./actions/students.action";
-
+import {NavigatorService} from "./services";
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+    styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
     public title = "ngrx-helpers example app";
-    public students;
 
-
-    constructor(private store: Store<IState>, private restHelperService: StoreHelperService) {
-        this.students = this.store.pipe(select(getStudentList));
+    constructor(private Navigator: NavigatorService) {
     }
 
-    loadStudents() {
-        this.restHelperService.getAll(StudentsAction);
+    openConfig() {
+        this.Navigator.navigateToConfig();
     }
 }

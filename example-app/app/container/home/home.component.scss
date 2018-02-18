@@ -1,0 +1,6 @@
+@import "../../../styles";
+
+:host {
+    @extend #app-component;
+    flex-direction: row;
+}
