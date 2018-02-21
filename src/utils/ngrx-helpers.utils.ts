@@ -2,6 +2,13 @@ import {Action} from "@ngrx/store";
 import {GenericResource, GenericAction, IResourceConfig} from "../resource";
 
 /**
+ * Interface to reference any subtype of the GenericResource
+ */
+export interface IResource {
+    new(...args: any[]): GenericResource;
+}
+
+/**
  * Allows further config options for effect helpers.
  */
 export interface IExtendedActionOptions {
@@ -35,10 +42,11 @@ export function createAction<Resource extends GenericResource, PayloadType>(reso
     return {type, action, payload, options};
 }
 
-interface IResource {
-    new(...args: any[]): GenericResource;
-}
-
+/**
+ * Provide the configuration for a resource
+ * @param config the config to apply
+ * @return The extended resource class with the configured values assigned.
+ */
 export function resourceConfig(config: IResourceConfig) {
     return function decorator<T extends IResource>(resourceClass: T): T {
         const isValid = validateResource(config);

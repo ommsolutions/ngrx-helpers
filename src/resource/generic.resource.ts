@@ -34,8 +34,8 @@ export class GenericResource implements IResourceConfig {
 
     /**
      * Returns the resourcePath of this resource, optionally dependent on a parent reference
-     * @param {string | number} parentRef the id of the parent resource which should be used.
-     * @return {string} The resourcePath according to the parentRef
+     * @param parentRef the id of the parent resource which should be used.
+     * @return The resourcePath according to the parentRef
      */
     public getResourcePath(parentRef?: string | number): string {
         if (parentRef != null) {
@@ -59,9 +59,9 @@ export class GenericResource implements IResourceConfig {
      *   - actionVariant:   Used to differentiate between different states of the request, while "request" indicates the actual request,
      *                      "success" indicates a successful response and error an error response.
      *
-     * @param {GenericAction} action Specify the action part of the action type.
-     * @param {GenericActionTypesVariants} variant Specify the variant part of the action type.
-     * @return {string} Returns the generated action type (format: "ngrx-helper: [<actionName>] <action> - <actionVariant>")
+     * @param action Specify the action part of the action type.
+     * @param variant Specify the variant part of the action type.
+     * @return Returns the generated action type (format: "ngrx-helper: [<actionName>] <action> - <actionVariant>")
      */
     public getActionType(action: GenericAction, variant: GenericActionTypesVariants = "request"): string {
 

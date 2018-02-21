@@ -1,5 +1,5 @@
 import {EntityAdapter} from "@ngrx/entity";
-import {GenericResource} from "@omm/ngrx-helpers";
+import {GenericResource} from "./generic.resource";
 
 export interface IResourceConfig {
     actionName: string;
