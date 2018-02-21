@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {IState, selectAllPlants} from "../../reducers";
 import {NavigatorService} from "../../services";
-import {PlantsResource} from "../../actions/plants.resource";
+import {PlantsResource} from "../../resources/plants.resource";
 import {DispatchService} from "@omm/ngrx-helpers";
 import {ITableDefinition} from "../../component/table/table.component";
 

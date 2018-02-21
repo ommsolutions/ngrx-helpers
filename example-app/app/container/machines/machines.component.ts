@@ -6,9 +6,9 @@ import {Subscription} from "rxjs/Subscription";
 import {tap} from "rxjs/operators/tap";
 
 import {IState, selectAllMachines} from "../../reducers";
-import {MachinesResource} from "../../actions/machines.resource";
-import {PlantsResource} from "../../actions/plants.resource";
+import {MachinesResource} from "../../resources/machines.resource";
 import {ITableDefinition} from "../../component/table/table.component";
+import {NavigatorService} from "../../services";
 
 @Component({
     selector: "app-machines",
@@ -39,7 +39,7 @@ export class MachinesComponent implements OnInit, OnDestroy {
             name: "plantId",
             hidden: false
         }],
-        rowClickHandler: (row => console.log(row))
+        rowClickHandler: this.Navigator.navigateToMachine.bind(this)
     };
 
     ngOnInit(): void {
@@ -69,6 +69,7 @@ export class MachinesComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
                 private dispatchService: DispatchService,
+                private Navigator: NavigatorService,
                 private store: Store<IState>) {
     }
 }

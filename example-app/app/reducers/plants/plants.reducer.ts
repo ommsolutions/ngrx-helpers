@@ -1,7 +1,7 @@
 import {ExtendedAction, ReducerHelper} from "@omm/ngrx-helpers";
 import {EntityState} from "@ngrx/entity";
 
-import {IPlant, plantAdapter, PlantsResource} from "../../actions/plants.resource";
+import {IPlant, plantAdapter, PlantsResource} from "../../resources/plants.resource";
 
 
 export interface IState extends EntityState<IPlant> {

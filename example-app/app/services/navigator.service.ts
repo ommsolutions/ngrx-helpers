@@ -45,4 +45,14 @@ export class NavigatorService {
         const path = [`./plants/${id}/machines`];
         this.store.dispatch(new RouterActions.Go({path}));
     }
+
+    public navigateToMachine(id: number) {
+        const path = [`./machines/${id}`];
+        this.store.dispatch(new RouterActions.Go({path}));
+    }
+
+    public navigateToMachines() {
+        const path = [`./machines`];
+        this.store.dispatch(new RouterActions.Go({path}));
+    }
 }

@@ -3,6 +3,7 @@ import {HomeComponent} from "../container/home";
 import {ConfigComponent} from "../container/config";
 import {PlantsComponent} from "../container/plants";
 import {MachinesComponent} from "../container/machines";
+import {MachineComponent} from "../container/machine";
 
 /**
  * The selector for the router sub state.
@@ -20,6 +21,7 @@ export const ROUTES: Routes = [
     {path: "plants", component: PlantsComponent},
     {path: "plants/:id/machines", component: MachinesComponent},
     {path: "machines", component: MachinesComponent},
+    {path: "machines/:id", component: MachineComponent},
     {path: "**", component: HomeComponent},
 
 ];

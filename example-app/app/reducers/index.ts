@@ -5,8 +5,8 @@ import {storeFreeze} from "ngrx-store-freeze";
 import {environment} from "../../environments/environment";
 import {PlantReducer, PlantState} from "./plants";
 import {MachineReducer, MachineState} from "./machines";
-import * as fromPlantsResource from "../actions/plants.resource";
-import * as fromMachineResource from "../actions/machines.resource";
+import * as fromPlantsResource from "../resources/plants.resource";
+import * as fromMachineResource from "../resources/machines.resource";
 import * as fromRouter from "./router";
 
 export interface IState {
@@ -41,6 +41,6 @@ export const selectAllPlants = createSelector(selectPlantState, fromPlantsResour
 
 export const selectMachineState = createFeatureSelector<MachineState>("machines");
 export const selectAllMachines = createSelector(selectMachineState, fromMachineResource.selectAll);
-export const selectAllMachinesOfPlant = (plantId: number, state: any) =>
-    createSelector(selectMachineState, fromMachineResource.selectAll)(state)
-        .filter(machines => machines.plantId === plantId);
+export const selectMachineEntities = createSelector(selectMachineState, fromMachineResource.selectEntities);
+export const selectMachine = (id: number) => createSelector(selectMachineEntities, entities => entities[id])
+    .bind(createSelector);

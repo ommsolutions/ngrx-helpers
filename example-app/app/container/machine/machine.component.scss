@@ -1,0 +1,10 @@
+@import "../../../styles";
+
+:host {
+    @extend #app-component;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+}

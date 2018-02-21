@@ -5,7 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {EffectHelperService} from "@omm/ngrx-helpers";
 
 import {DataService} from "../services";
-import {PlantsResource} from "../actions/plants.resource";
+import {PlantsResource} from "../resources/plants.resource";
 
 @Injectable()
 export class PlantsEffects {

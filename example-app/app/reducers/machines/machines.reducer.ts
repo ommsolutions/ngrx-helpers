@@ -1,7 +1,7 @@
 import {ExtendedAction, ReducerHelper} from "@omm/ngrx-helpers";
 import {EntityState} from "@ngrx/entity";
 
-import {IMachine, machineAdapter, MachinesResource} from "../../actions/machines.resource";
+import {IMachine, machineAdapter, MachinesResource} from "../../resources/machines.resource";
 
 export interface IState extends EntityState<IMachine> {
 }

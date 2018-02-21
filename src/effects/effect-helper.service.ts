@@ -87,7 +87,7 @@ export class EffectHelperService {
      * @return
      */
     handle<Resource extends GenericResource>(actionClass: { new(): Resource },
-                                             action: GenericAction): OperatorFunction<Action, Action> {
+                                             action: GenericAction | GenericAction[]): OperatorFunction<Action, Action> {
         return pipe(
             this.selectAction(actionClass, action),
             this.executeRequest(actionClass),
