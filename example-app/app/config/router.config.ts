@@ -19,6 +19,7 @@ export const ROUTES: Routes = [
     {path: "config", component: ConfigComponent},
     {path: "plants", component: PlantsComponent},
     {path: "plants/:id/machines", component: MachinesComponent},
+    {path: "machines", component: MachinesComponent},
     {path: "**", component: HomeComponent},
 
 ];

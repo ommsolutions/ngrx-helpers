@@ -17,6 +17,6 @@ export class HomeComponent {
     }
 
     goToPlants() {
-        this.Navigator.navigateToPlant();
+        this.Navigator.navigateToPlants();
     }
 }

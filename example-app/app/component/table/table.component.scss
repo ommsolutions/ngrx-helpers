@@ -1,11 +1,11 @@
 @import "../../../styles";
 
 /* Structure */
-.example-container {
+.table-container {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    margin: 0 100px;
+    padding: 5px 10px 0;
     min-width: 300px;
 }
 
@@ -13,13 +13,12 @@
  * Styles to make the demo's cdk-table match the material design spec
  * https://material.io/guidelines/components/data-tables.html
  */
-.example-table {
+.table {
     flex: 1 1 auto;
     overflow: auto;
-    max-height: 500px;
 }
 
-.example-header-row, .example-row {
+.row {
     display: flex;
     border-bottom: 1px solid #ccc;
     align-items: center;
@@ -27,23 +26,33 @@
     padding: 0 8px;
 }
 
-.example-cell, .example-header-cell {
+.header-row {
+    @extend .row;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    background: lightgray;
+}
+
+.cell, .header-cell {
     flex: 1;
 }
 
-.example-header-cell {
+.header-cell {
     font-size: 12px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.54);
 }
 
-.example-cell {
+.cell {
     font-size: 13px;
     color: rgba(0, 0, 0, 0.87);
 }
 
+cdk-table {
+    overflow: auto;
+}
 
 :host {
     @extend #app-component;
-    justify-content: center;
 }

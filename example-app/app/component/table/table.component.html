@@ -1,14 +1,14 @@
-<div class="example-container mat-elevation-z8">
+<div class="table-container mat-elevation-z8">
 
     <cdk-table [dataSource]="tableData">
 
         <ng-container *ngFor="let column of tableDefinition.columns" cdkColumnDef="{{column.name}}">
-            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell">{{column.name}}</cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell">{{row[column.name]}}</cdk-cell>
+            <cdk-header-cell *cdkHeaderCellDef class="header-cell">{{column.name}}</cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="cell">{{row[column.name]}}</cdk-cell>
         </ng-container>
 
-        <cdk-header-row *cdkHeaderRowDef="visibleColumns" class="example-header-row"></cdk-header-row>
-        <cdk-row *cdkRowDef="let row; columns: visibleColumns;" class="example-row"
+        <cdk-header-row *cdkHeaderRowDef="visibleColumns" class="header-row"></cdk-header-row>
+        <cdk-row *cdkRowDef="let row; columns: visibleColumns;" class="row"
                  (click)="tableDefinition.rowClickHandler(row.id)"></cdk-row>
 
     </cdk-table>

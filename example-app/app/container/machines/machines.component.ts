@@ -47,16 +47,11 @@ export class MachinesComponent implements OnInit, OnDestroy {
         this.idSubscription = this.route.params
             .pipe(
                 tap(params => {
-                    console.log(params);
                     if (params.id) {
                         // load specific machines for one plant
-                        // TODO: select only assigned machines
                         this.machines = this.store.pipe(select(selectAllMachines));
                         this.dispatchService.dispatchComplex(MachinesResource, "LoadAll", undefined, {
-                            parent: {
-                                resource: PlantsResource,
-                                id: params.id
-                            },
+                            parentRef: params.id
                         });
                     } else {
                         // load all machines

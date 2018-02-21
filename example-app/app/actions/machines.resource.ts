@@ -1,5 +1,6 @@
-import {GenericAction, resourceDefinition} from "@omm/ngrx-helpers";
+import {GenericResource, resourceConfig} from "@omm/ngrx-helpers";
 import {createEntityAdapter, EntityAdapter} from "@ngrx/entity";
+import {PlantsResource} from "./plants.resource";
 
 export interface IMachine {
     id: number;
@@ -22,8 +23,13 @@ export const {
     selectTotal
 } = machineAdapter.getSelectors();
 
-@resourceDefinition("Machines", machineAdapter, "/machines")
-export class MachinesResource extends GenericAction {
+@resourceConfig({
+    actionName: "Machines",
+    entityAdapter: machineAdapter,
+    resourcePath: "/machines",
+    parentResource: PlantsResource
+})
+export class MachinesResource extends GenericResource {
 }
 
 

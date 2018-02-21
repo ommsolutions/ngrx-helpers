@@ -6,8 +6,16 @@
 
 :host {
     height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
+}
+
+#content {
+    @extend #app-component;
+    max-height: 93vh;
+    height: 93vh;
 }
 
 #footer {
@@ -16,8 +24,11 @@
     flex-direction: row;
     justify-content: center;
     align-content: center;
+    max-height: 2vh;
+    height: 2vh;
 }
 
-:host {
-    @extend #app-component;
+#header {
+    max-height: 5vh;
+    height: 5vh;
 }

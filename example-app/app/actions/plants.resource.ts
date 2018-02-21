@@ -1,4 +1,4 @@
-import {GenericAction, resourceDefinition} from "@omm/ngrx-helpers";
+import {GenericResource, resourceConfig} from "@omm/ngrx-helpers";
 import {createEntityAdapter, EntityAdapter} from "@ngrx/entity";
 
 export interface IPlant {
@@ -24,6 +24,10 @@ export const {
 } = plantAdapter.getSelectors();
 
 
-@resourceDefinition("Plants", plantAdapter, "/plants")
-export class PlantsResource extends GenericAction {
+@resourceConfig({
+    actionName: "Plants",
+    entityAdapter: plantAdapter,
+    resourcePath: "/plants"
+})
+export class PlantsResource extends GenericResource {
 }

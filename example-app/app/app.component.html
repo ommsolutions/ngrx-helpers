@@ -1,9 +1,11 @@
-<mat-toolbar>
+<mat-toolbar id="header">
     <span>{{title}}</span>
     <span class="fill"></span>
     <button mat-raised-button color="primary" (click)="openConfig()">Show Config</button>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div id="content">
+    <router-outlet></router-outlet>
+</div>
 <div id="footer">
     <span>Made with <3 in Stuttgart - Version: Alpha release</span>
 </div>

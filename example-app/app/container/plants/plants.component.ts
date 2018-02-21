@@ -15,7 +15,7 @@ export class PlantsComponent implements OnInit {
     public plants;
 
     public tableDefinition: ITableDefinition = {
-        rowClickHandler: this.goToPlant.bind(this),
+        rowClickHandler: this.Navigator.navigateToPlant.bind(this),
         columns: [{
             name: "id",
             hidden: true
@@ -31,9 +31,5 @@ export class PlantsComponent implements OnInit {
 
     ngOnInit(): void {
         this.dispatchService.dispatch(PlantsResource, "LoadAll");
-    }
-
-    goToPlant(id: number) {
-        this.Navigator.navigateToPlant(id);
     }
 }

@@ -2,10 +2,9 @@
 
 :host {
     @extend #app-component;
+    flex-direction: column;
 }
 
-#machineTable {
-    @extend #app-component;
-    max-height: 85vh;
-    overflow-y: auto;
+h1 {
+    text-align: center;
 }

@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {HttpErrorResponse} from "@angular/common/http";
 import {OperatorFunction} from "rxjs/interfaces";
 import {Action} from "@ngrx/store";
 import {ofType} from "@ngrx/effects";
@@ -8,10 +9,9 @@ import {pipe} from "rxjs/RX";
 import {Observable} from "rxjs/Observable";
 
 import {RestHelperService} from "../services";
-import {GenericAction, GenericActionTypes} from "../actions";
+import {GenericResource, GenericAction} from "../resource";
 import {ExtendedAction} from "../utils";
 import "rxjs/add/observable/throw";
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable()
 export class EffectHelperService {
@@ -20,28 +20,34 @@ export class EffectHelperService {
     }
 
     /**
-     * Adds default ngrx ofType selector for all action types provided.
-     * @param actionClass The ActionClass which should be handled (extending GenericAction).
-     * @param actionTypes One or more action types which should be handled.
+     * Adds default ngrx ofType selector for all actions.
+     * @param actionClass The ActionClass which should be handled (extending GenericResource).
+     * @param action One or more action which should be handled.
      * @return The generated ofType selector.
      */
-    selectAction<action extends GenericAction>(actionClass: new () => action,
-                                               actionTypes: GenericActionTypes | GenericActionTypes[]): OperatorFunction<Action, Action> {
-        actionTypes = [].concat(actionTypes);
+    selectAction<Resource extends GenericResource>(actionClass: new () => Resource,
+                                                   action: GenericAction | GenericAction[]): OperatorFunction<Action, Action> {
+        action = [].concat(action);
         const actionInstance = new actionClass();
-        const typeArray = actionTypes.map((actionType: GenericActionTypes) => actionInstance.getActionType(actionType));
+        const typeArray = action.map((actionType: GenericAction) => actionInstance.getActionType(actionType));
         return ofType(...typeArray);
     }
 
-    executeRequest<action extends GenericAction, R>
+    executeRequest<action extends GenericResource, R>
     (actionClass: new () => action): OperatorFunction<ExtendedAction<R>, ({ response: R, actionType: string })> {
         return mergeMap((actionObject: ExtendedAction<any>) => {
             const actionInstance = new actionClass();
-            // we need to forward the actionType to later operators, so the response can be handled properly.
-            return this.restHelperService.loadAll<R>(actionInstance.resourcePath)
+
+            // analyse options for parentRef
+            let parentRef;
+            if (actionObject.options && actionObject.options.parentRef != null) {
+                parentRef = actionObject.options.parentRef;
+            }
+
+            return this.restHelperService.loadAll<R>(actionInstance.getResourcePath(parentRef))
                 .pipe(
-                    map((response: R) => ({response, actionType: actionObject.actionType})),
-                    catchError((err: HttpErrorResponse) => Observable.throw({...err, actionType: actionObject.actionType})));
+                    map((response: R) => ({response, action: actionObject.action})),
+                    catchError((err: HttpErrorResponse) => Observable.throw({...err, action: actionObject.action})));
         });
     }
 
@@ -51,9 +57,9 @@ export class EffectHelperService {
      * @param actionClass The action class which specifies the base action type.
      * @return The generated map statement, mapping the input response to a success action.
      */
-    handleSuccessResponse<action extends GenericAction>(actionClass: new () => action): OperatorFunction<any, Action> {
-        return map(({response, actionType}) => ({
-            type: new actionClass().getActionType(actionType, "success"),
+    handleSuccessResponse<Resource extends GenericResource>(actionClass: new () => Resource): OperatorFunction<any, Action> {
+        return map(({response, action}) => ({
+            type: new actionClass().getActionType(action, "success"),
             payload: response
         }));
     }
@@ -63,9 +69,9 @@ export class EffectHelperService {
      * @param actionClass The action class which specifies the base action type.
      * @return res
      */
-    handleErrorResponse<action extends GenericAction>(actionClass: new () => action): OperatorFunction<Action, Action> {
+    handleErrorResponse<Resource extends GenericResource>(actionClass: new () => Resource): OperatorFunction<Action, Action> {
         return catchError((err: any) => of({
-            type: new actionClass().getActionType(err.actionType, "error"),
+            type: new actionClass().getActionType(err.action, "error"),
             payload: err
         }));
     }
@@ -77,13 +83,13 @@ export class EffectHelperService {
      * skipExecuteRequest: boolean = false
 
      * @param actionClass
-     * @param actionType
+     * @param action
      * @return
      */
-    handle<action extends GenericAction>(actionClass: {new(): action},
-                                         actionType: GenericActionTypes): OperatorFunction<Action, Action> {
+    handle<Resource extends GenericResource>(actionClass: { new(): Resource },
+                                             action: GenericAction): OperatorFunction<Action, Action> {
         return pipe(
-            this.selectAction(actionClass, actionType),
+            this.selectAction(actionClass, action),
             this.executeRequest(actionClass),
             this.handleSuccessResponse(actionClass),
             this.handleErrorResponse(actionClass)

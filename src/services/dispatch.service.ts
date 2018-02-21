@@ -1,15 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 
-import {GenericAction, GenericActionTypes} from "../actions";
-import {NgrxHelpersUtils} from "../utils";
-
-export interface IDispatchOptions {
-    parent: {
-        resource: new () => GenericAction;
-        id: number
-    };
-}
+import {GenericResource, GenericAction} from "../resource";
+import {createAction, IExtendedActionOptions} from "../utils";
 
 @Injectable()
 export class DispatchService {
@@ -17,24 +10,18 @@ export class DispatchService {
     constructor(private store: Store<any>) {
     }
 
-    dispatch<action extends GenericAction, P>(actionClass: new () => action,
-                                              actionType: GenericActionTypes,
-                                              payload?: P): void {
-        const actionInstance = NgrxHelpersUtils.createActionInstance(actionClass, actionType, payload);
+    dispatch<action extends GenericResource, P>(actionClass: new () => action,
+                                                actionType: GenericAction,
+                                                payload?: P): void {
+        const actionInstance = createAction(actionClass, actionType, payload);
         this.store.dispatch(actionInstance);
     }
 
-
-    /**
-     * TODO: this dispatch should be able to make request to concated resource paths
-     * However, this is currently not considered in the architecture of the module ...
-     */
-    dispatchComplex<action extends GenericAction, P>(actionClass: new () => action,
-                                                     actionType: GenericActionTypes,
-                                                     payload?: P,
-                                                     options?: IDispatchOptions): void {
-        const actionInstance = NgrxHelpersUtils.createActionInstance(actionClass, actionType, payload);
-        console.log("options", options);
+    dispatchComplex<action extends GenericResource, P>(actionClass: new () => action,
+                                                       actionType: GenericAction,
+                                                       payload?: P,
+                                                       options?: IExtendedActionOptions): void {
+        const actionInstance = createAction(actionClass, actionType, payload, options);
         this.store.dispatch(actionInstance);
     }
 }
