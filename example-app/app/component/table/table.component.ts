@@ -2,12 +2,18 @@ import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
 
 export interface ITableDefinition {
     columns: IColumnDefinition[];
-    rowClickHandler: (id: number | string) => void;
 }
 
 export interface IColumnDefinition {
     name: string;
     hidden: boolean;
+    type?: "action" | "text";
+    actions?: ITableAction[];
+}
+
+export interface ITableAction {
+    icon: string;
+    fn: Function;
 }
 
 @Component({

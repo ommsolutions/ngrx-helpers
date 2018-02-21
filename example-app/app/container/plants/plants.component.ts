@@ -15,13 +15,19 @@ export class PlantsComponent implements OnInit {
     public plants;
 
     public tableDefinition: ITableDefinition = {
-        rowClickHandler: this.Navigator.navigateToPlant.bind(this),
         columns: [{
             name: "id",
             hidden: true
         }, {
             name: "city",
             hidden: false
+        }, {
+            name: "action",
+            hidden: false,
+            type: "action",
+            actions: [
+                {icon: "search", fn: this.Navigator.navigateToPlant.bind(this)}
+            ]
         }]
     };
 

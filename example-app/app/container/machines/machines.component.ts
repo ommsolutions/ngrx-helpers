@@ -38,8 +38,15 @@ export class MachinesComponent implements OnInit, OnDestroy {
         }, {
             name: "plantId",
             hidden: false
-        }],
-        rowClickHandler: this.Navigator.navigateToMachine.bind(this)
+        }, {
+            name: "action",
+            hidden: false,
+            type: "action",
+            actions: [
+                {icon: "search", fn: this.Navigator.navigateToMachine.bind(this)},
+                {icon: "delete", fn: (id) => console.log("Deleting", id)}
+            ]
+        }]
     };
 
     ngOnInit(): void {

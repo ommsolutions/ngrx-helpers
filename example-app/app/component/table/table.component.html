@@ -4,12 +4,22 @@
 
         <ng-container *ngFor="let column of tableDefinition.columns" cdkColumnDef="{{column.name}}">
             <cdk-header-cell *cdkHeaderCellDef class="header-cell">{{column.name}}</cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="cell">{{row[column.name]}}</cdk-cell>
+            <ng-container *ngIf="column.type == null || column.type === 'text'">
+                <cdk-cell *cdkCellDef="let row" class="cell">{{row[column.name]}}</cdk-cell>
+            </ng-container>
+            <ng-container *ngIf="column.type === 'action'">
+                <cdk-cell *cdkCellDef="let row" class="cell">
+                    <ng-container style="flex-direction: row" *ngFor="let action of column.actions">
+                        <button mat-icon-button (click)="action.fn(row.id)">
+                            <i class="material-icons">{{action.icon}}</i>
+                        </button>
+                    </ng-container>
+                </cdk-cell>
+            </ng-container>
         </ng-container>
 
         <cdk-header-row *cdkHeaderRowDef="visibleColumns" class="header-row"></cdk-header-row>
-        <cdk-row *cdkRowDef="let row; columns: visibleColumns;" class="row"
-                 (click)="tableDefinition.rowClickHandler(row.id)"></cdk-row>
+        <cdk-row *cdkRowDef="let row; columns: visibleColumns;" class="row"></cdk-row>
 
     </cdk-table>
 </div>
