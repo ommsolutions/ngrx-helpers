@@ -44,7 +44,7 @@ export class EffectHelperService {
                 parentRef = actionObject.options.parentRef;
             }
 
-            return this.restHelperService.loadAll<R>(actionInstance.getResourcePath(parentRef))
+            return this.restHelperService.execute(actionObject.action, actionInstance.getResourcePath(parentRef), actionObject.payload)
                 .pipe(
                     map((response: R) => ({response, action: actionObject.action})),
                     catchError((err: HttpErrorResponse) => Observable.throw({...err, action: actionObject.action})));

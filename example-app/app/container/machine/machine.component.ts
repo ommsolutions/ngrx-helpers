@@ -31,12 +31,10 @@ export class MachineComponent implements OnInit, OnDestroy {
             .pipe(
                 tap(params => {
                     if (params.id) {
-                        // load specific machines for one plant
+                        // load specific machine
                         const selector = selectMachine(params.id);
                         this.machine = this.store.pipe(select(selector));
-                        this.dispatchService.dispatchComplex(MachinesResource, "LoadOne", params.id, {
-                            parentRef: params.id
-                        });
+                        this.dispatchService.dispatch(MachinesResource, "LoadOne", params.id);
                     } else {
                         this.Navigator.navigateToMachines();
                     }

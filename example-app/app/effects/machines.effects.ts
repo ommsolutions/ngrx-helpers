@@ -12,7 +12,7 @@ export class MachinesEffects {
 
     @Effect()
     plants$: Observable<Action> = this.actions$
-        .pipe(this.effectHelperService.handle(MachinesResource, ["LoadAll", "LoadOne"]));
+        .pipe(this.effectHelperService.handle(MachinesResource, ["LoadAll", "LoadOne", "DeleteOne"]));
 
     constructor(private actions$: Actions,
                 private dataService: DataService,

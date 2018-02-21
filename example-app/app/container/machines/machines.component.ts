@@ -44,7 +44,7 @@ export class MachinesComponent implements OnInit, OnDestroy {
             type: "action",
             actions: [
                 {icon: "search", fn: this.Navigator.navigateToMachine.bind(this)},
-                {icon: "delete", fn: (id) => console.log("Deleting", id)}
+                {icon: "delete", fn: this.deleteMachine.bind(this)}
             ]
         }]
     };
@@ -78,5 +78,9 @@ export class MachinesComponent implements OnInit, OnDestroy {
                 private dispatchService: DispatchService,
                 private Navigator: NavigatorService,
                 private store: Store<IState>) {
+    }
+
+    public deleteMachine(id: number) {
+        this.dispatchService.dispatch(MachinesResource, "DeleteOne", id);
     }
 }
