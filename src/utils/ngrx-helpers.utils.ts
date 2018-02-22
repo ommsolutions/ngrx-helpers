@@ -1,5 +1,5 @@
 import {Action} from "@ngrx/store";
-import {GenericResource, GenericAction, IResourceConfig} from "../resource";
+import {GenericResource, GenericAction, IResourceConfig, GenericActionVariants} from "../resource";
 
 /**
  * Interface to reference any subtype of the GenericResource
@@ -11,17 +11,22 @@ export interface IResource {
 /**
  * Allows further config options for effect helpers.
  */
-export interface IExtendedActionOptions {
+export interface IResourceActionOptions {
     /** The resource will be queried using the id provided here
      * and the defined parent resource in the resource config. */
     parentRef?: number | string;
 }
 
-export class ExtendedAction<P> implements Action {
+/**
+ * A ResourceAction is a action derived from a resource definition, and holds additional attributes
+ * such as options
+ */
+export class ResourceAction implements Action {
     readonly type: string;
     readonly action: GenericAction;
-    readonly payload?: P;
-    readonly options?: IExtendedActionOptions;
+    readonly payload?: any;
+    readonly initialPayload?: any;
+    readonly options?: IResourceActionOptions;
 }
 
 /**
@@ -36,7 +41,7 @@ export class ExtendedAction<P> implements Action {
 export function createAction<Resource extends GenericResource, PayloadType>(resource: new () => Resource,
                                                                             action: GenericAction,
                                                                             payload?: PayloadType,
-                                                                            options?: IExtendedActionOptions): ExtendedAction<PayloadType> {
+                                                                            options?: IResourceActionOptions): ResourceAction {
     const instance: Resource = new resource();
     const type = instance.getActionType(action);
     return {type, action, payload, options};
@@ -88,4 +93,22 @@ function validateResource(config: IResourceConfig) {
         console.error(`Resource: "${actionName}" could not be created. all related actions will probably fail`);
     }
     return isValid;
+}
+
+/**
+ * Flattens an array which contains strings and arrays of strings to an array of strings.
+ * @param actionTypes The array with nested action type arrays.
+ * @return An array of all action types
+ */
+export function flattenActionTypeArray(actionTypes: (string | string[])[]): string[] {
+    return [].concat.apply([], actionTypes);
+}
+
+/**
+ * Checks if the provided action is a genericActionVariants object
+ * @param {GenericAction | GenericActionVariants} action The action to check
+ * @return {boolean} True if it is of type GenericActionVariants, false o/w.
+ */
+export function isGenericActionVariant(action: GenericAction | GenericActionVariants): boolean {
+    return action instanceof Object && (<GenericActionVariants>action).action != null;
 }

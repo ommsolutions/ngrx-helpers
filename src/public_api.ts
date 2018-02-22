@@ -3,4 +3,4 @@ export {GenericAction, GenericResource, GenericActionTypesVariants} from "./reso
 export {EffectHelperService} from "./effects";
 export {ReducerHelper} from "./reducers";
 export {DispatchService} from "./services";
-export {ExtendedAction, resourceConfig} from "./utils";
+export {ResourceAction, resourceConfig} from "./utils";

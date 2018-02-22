@@ -2,5 +2,10 @@
 
 :host {
     @extend #app-component;
-    flex-direction: row;
+}
+
+.home {
+    @extend #app-component;
+    flex-direction: column;
+    align-items: center;
 }

@@ -10,19 +10,12 @@ export interface IPlant {
     description: string;
 }
 
-
 export const plantAdapter: EntityAdapter<IPlant> = createEntityAdapter<IPlant>({
     selectId: (plant: IPlant) => plant.id,
     sortComparer: false
 });
 
-export const {
-    selectIds,
-    selectEntities,
-    selectAll,
-    selectTotal
-} = plantAdapter.getSelectors();
-
+export const {selectAll} = plantAdapter.getSelectors();
 
 @resourceConfig({
     actionName: "Plants",

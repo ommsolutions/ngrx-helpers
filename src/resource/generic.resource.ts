@@ -4,6 +4,11 @@ import {IResourceConfig} from "./resource-config.interface";
 export type GenericAction = "LoadAll" | "LoadOne" | "CreateOne" | "UpdateOne" | "DeleteOne";
 export type GenericActionTypesVariants = "success" | "error" | "request";
 
+export class GenericActionVariants {
+    action: GenericAction;
+    variants: GenericActionTypesVariants[];
+}
+
 /**
  * Superclass which has to be extended by all action classes managed by this library.
  * Extending class must provide:
@@ -71,5 +76,25 @@ export class GenericResource implements IResourceConfig {
         }
 
         return `ngrx-helpers: [${this.actionName}] ${action} - ${variant}`;
+    }
+
+    /**
+     * Convenience method to generate action types for multiple variants.
+     * @return {string[]} The action type for each variant specified, uses the default variant, if nothing else is specified.
+     */
+    public getActionTypeVariants(actionVariants: GenericActionVariants): string[] {
+        const {variants, action} = actionVariants;
+        const actionTypes: string[] = [];
+        if (variants == null || variants.length === 0) {
+            // return the default variant
+            actionTypes.push(this.getActionType(action));
+            return actionTypes;
+        }
+
+        for (let i = 0, l = variants.length; i < l; i++) {
+            actionTypes.push(this.getActionType(action, variants[i]));
+        }
+
+        return actionTypes;
     }
 }

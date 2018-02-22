@@ -23,5 +23,4 @@ export const ROUTES: Routes = [
     {path: "machines", component: MachinesComponent},
     {path: "machines/:id", component: MachineComponent},
     {path: "**", component: HomeComponent},
-
 ];

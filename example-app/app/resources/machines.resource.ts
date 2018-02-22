@@ -1,5 +1,6 @@
 import {GenericResource, resourceConfig} from "@omm/ngrx-helpers";
 import {createEntityAdapter, EntityAdapter} from "@ngrx/entity";
+
 import {PlantsResource} from "./plants.resource";
 
 export interface IMachine {
@@ -17,10 +18,8 @@ export const machineAdapter: EntityAdapter<IMachine> = createEntityAdapter<IMach
 });
 
 export const {
-    selectIds,
     selectEntities,
-    selectAll,
-    selectTotal
+    selectAll
 } = machineAdapter.getSelectors();
 
 @resourceConfig({

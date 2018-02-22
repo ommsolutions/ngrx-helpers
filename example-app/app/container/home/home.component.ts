@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 
 import {selectAllPlants, IState} from "../../reducers";
-import {NavigatorService} from "../../services";
+import {NavigatorService, NotificationsService} from "../../services";
 
 @Component({
     selector: "app-home",
@@ -12,11 +12,9 @@ import {NavigatorService} from "../../services";
 export class HomeComponent {
     public plants;
 
-    constructor(private store: Store<IState>, private Navigator: NavigatorService) {
+    constructor(private store: Store<IState>,
+                public  Navigator: NavigatorService,
+                public Notifications: NotificationsService) {
         this.plants = this.store.pipe(select(selectAllPlants));
-    }
-
-    goToPlants() {
-        this.Navigator.navigateToPlants();
     }
 }
