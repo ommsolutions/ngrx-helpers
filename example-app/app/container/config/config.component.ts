@@ -14,10 +14,6 @@ export class ConfigComponent {
     public default: INgrxHelpersModuleOptions = DEFAULT;
     public config: INgrxHelpersModuleOptions = CONFIG;
 
-    constructor(private Navigator: NavigatorService) {
-    }
-
-    public goBack() {
-        this.Navigator.back();
+    constructor(public Navigator: NavigatorService) {
     }
 }

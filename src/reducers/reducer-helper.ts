@@ -1,10 +1,10 @@
 import {EntityState} from "@ngrx/entity";
-import {ExtendedAction} from "../utils";
+import {ResourceAction} from "../utils";
 import {GenericResource} from "../resource";
 
 export class ReducerHelper {
     public static genericReducer<I, Resource extends GenericResource>(state: EntityState<I>,
-                                                                      action: ExtendedAction<any>,
+                                                                      action: ResourceAction,
                                                                       resource: new () => Resource): EntityState<I> {
         const resourceInstance = new resource();
         const eAdapter = resourceInstance.getEntityAdapter();
@@ -17,6 +17,9 @@ export class ReducerHelper {
                 const update = {...action.payload};
                 delete update.id;
                 return eAdapter.upsertOne({id: action.payload.id, changes: update}, state);
+            }
+            case resourceInstance.getActionType("DeleteOne", "success"): {
+                return eAdapter.removeOne(action.initialPayload, state);
             }
 
             default: {

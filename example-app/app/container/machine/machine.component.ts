@@ -26,16 +26,15 @@ export class MachineComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // decide if all machines should be loaded or just the ones for a specific plant
         this.idSubscription = this.route.params
-            .pipe(
-                tap(params => {
+            .pipe(tap(params => {
                     if (params.id) {
-                        // load specific machine
+                        // Load specific machine.
                         const selector = selectMachine(params.id);
                         this.machine = this.store.pipe(select(selector));
                         this.dispatchService.dispatch(MachinesResource, "LoadOne", params.id);
                     } else {
+                        // Navigate to the machiens overview.
                         this.Navigator.navigateToMachines();
                     }
                 })
@@ -45,9 +44,5 @@ export class MachineComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.idSubscription.unsubscribe();
-    }
-
-    goBack() {
-        this.Navigator.back();
     }
 }

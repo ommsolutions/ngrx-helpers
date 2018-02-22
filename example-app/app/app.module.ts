@@ -10,22 +10,17 @@ import {EffectsModule} from "@ngrx/effects";
 import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-store";
 import {NgrxHelpersModule} from "@omm/ngrx-helpers";
 
-import {CustomMaterialModule} from "./custom-material.module";
 import {environment} from "../environments/environment";
+import {CustomMaterialModule} from "./custom-material.module";
 import {AppComponent} from "./app.component";
+import {HomeComponent, ConfigComponent, MachinesComponent, MachineComponent, PlantsComponent} from "./container";
 import {metaReducers, reducers} from "./reducers";
 import {CustomRouterSerializer} from "./reducers/router";
-import {PlantsEffects, RouterEffects} from "./effects";
-import {DataService, NavigatorService} from "./services";
-import {HomeComponent} from "./container/home";
-import {ConfigComponent} from "./container/config";
-import {MachineComponent} from "./container/machine";
-import {MachinesComponent} from "./container/machines";
-import {PlantsComponent} from "./container/plants";
+import {PlantsEffects, RouterEffects, MachinesEffects} from "./effects";
+import {DataService, NavigatorService, NotificationsService} from "./services";
 import {ROUTER_CONFIG, ROUTES} from "./config/router.config";
 import {CONFIG} from "./config/ngrx-helpers.config";
-import {TableComponent} from "./component/table/table.component";
-import {MachinesEffects} from "./effects/machines.effects";
+import {TableComponent} from "./component/table";
 
 /**
  * Lists all components which represent a complete content area and can be accessible via route
@@ -73,6 +68,7 @@ const EFFECTS = [PlantsEffects, RouterEffects, MachinesEffects];
         DataService,
         NavigatorService,
         Location,
+        NotificationsService,
         {provide: RouterStateSerializer, useClass: CustomRouterSerializer}
     ],
     bootstrap: [AppComponent]

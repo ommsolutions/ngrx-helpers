@@ -1,6 +1,9 @@
 @import "../../../styles";
 
-/* Structure */
+:host {
+    @extend #app-component;
+}
+
 .table-container {
     display: flex;
     flex: 1 1 auto;
@@ -9,10 +12,6 @@
     min-width: 300px;
 }
 
-/*
- * Styles to make the demo's cdk-table match the material design spec
- * https://material.io/guidelines/components/data-tables.html
- */
 .table {
     flex: 1 1 auto;
     overflow: auto;
@@ -51,8 +50,4 @@
 
 cdk-table {
     overflow: auto;
-}
-
-:host {
-    @extend #app-component;
 }
