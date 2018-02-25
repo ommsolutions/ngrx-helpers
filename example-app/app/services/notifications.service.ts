@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {select, Store} from "@ngrx/store";
 import {MatSnackBar} from "@angular/material";
 import {filter, tap} from "rxjs/operators";
-import {pipe} from "rxjs/util/pipe";
 import {IState, lastNotification} from "../reducers";
 import {INotification} from "../reducers/ui/ui.reducer";
 import {AddNotification} from "../actions/ui.actions";

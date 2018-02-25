@@ -106,8 +106,8 @@ export function flattenActionTypeArray(actionTypes: (string | string[])[]): stri
 
 /**
  * Checks if the provided action is a genericActionVariants object
- * @param {GenericAction | GenericActionVariants} action The action to check
- * @return {boolean} True if it is of type GenericActionVariants, false o/w.
+ * @param action The action to check
+ * @return True if it is of type GenericActionVariants, false o/w.
  */
 export function isGenericActionVariant(action: GenericAction | GenericActionVariants): boolean {
     return action instanceof Object && (<GenericActionVariants>action).action != null;

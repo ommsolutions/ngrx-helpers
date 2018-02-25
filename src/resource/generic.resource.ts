@@ -80,7 +80,7 @@ export class GenericResource implements IResourceConfig {
 
     /**
      * Convenience method to generate action types for multiple variants.
-     * @return {string[]} The action type for each variant specified, uses the default variant, if nothing else is specified.
+     * @return The action type for each variant specified, uses the default variant, if nothing else is specified.
      */
     public getActionTypeVariants(actionVariants: GenericActionVariants): string[] {
         const {variants, action} = actionVariants;
