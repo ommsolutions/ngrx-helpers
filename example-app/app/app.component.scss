@@ -13,7 +13,7 @@
 }
 
 #content {
-    @extend #app-component;
+    @extend #flex-box;
     max-height: 93vh;
     height: 93vh;
 }

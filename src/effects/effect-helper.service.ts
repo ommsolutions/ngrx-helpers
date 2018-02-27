@@ -6,10 +6,23 @@ import {OperatorFunction} from "rxjs/interfaces";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
 import {of} from "rxjs/observable/of";
+import "rxjs/add/observable/throw";
 
 import {RestHelperService} from "../services";
 import {GenericResource, GenericAction, GenericActionVariants} from "../resource";
-import {flattenActionTypeArray, isGenericActionVariant, ResourceAction} from "../utils";
+import {flattenActionTypeArray, IPayload, isGenericActionVariant, ResourceAction} from "../utils";
+
+export interface ISuccessAction extends Action {
+    action: GenericAction;
+    payload: IPayload;
+    response: any;
+}
+
+export interface IErrorAction extends Action {
+    err: any;
+    action: GenericAction;
+    payload: IPayload;
+}
 
 @Injectable()
 export class EffectHelperService {
@@ -40,8 +53,9 @@ export class EffectHelperService {
      * @return An action containing the successful response of the request or an error observable containing the error which
      * occurred by executing the http request.
      */
-    executeRequest<Resource extends GenericResource>(resource: new () => Resource): OperatorFunction<ResourceAction, ResourceAction> {
-        return mergeMap(actionObject => {
+    executeRequest<Resource extends GenericResource>(resource: new () => Resource):
+        OperatorFunction<ResourceAction, IErrorAction | ISuccessAction> {
+        return mergeMap((actionObject: ResourceAction) => {
             const resourceInstance = new resource();
 
             // analyse options for parentRef
@@ -65,7 +79,7 @@ export class EffectHelperService {
                         payload: actionObject.payload
                     })),
                     catchError((err: HttpErrorResponse) => Observable.throw({
-                        ...err,
+                        err: err.message,
                         action: actionObject.action,
                         payload: actionObject.payload
                     }))
@@ -79,11 +93,13 @@ export class EffectHelperService {
      * @param resource The resource which is affected by the response
      * @return The generated map statement, mapping the input response to a success action.
      */
-    handleSuccessResponse<Resource extends GenericResource>(resource: new () => Resource): OperatorFunction<any, Action> {
+    handleSuccessResponse<Resource extends GenericResource>(resource: new () => Resource):
+        OperatorFunction<ISuccessAction, ISuccessAction> {
         return map(({response, action, payload}) => ({
             type: new resource().getActionType(action, "success"),
-            payload: response,
-            initialPayload: payload
+            action,
+            response,
+            payload
         }));
     }
 
@@ -92,11 +108,16 @@ export class EffectHelperService {
      * @param resource The resource which is affected by the error.
      * @return the generated catchError function which creates the error action.
      */
-    handleErrorResponse<Resource extends GenericResource>(resource: new () => Resource): OperatorFunction<Action, Action> {
-        return catchError((err: any) => of({
-            type: new resource().getActionType(err.action, "error"),
-            payload: err
-        }));
+    handleErrorResponse<Resource extends GenericResource>(resource: new () => Resource): OperatorFunction<IErrorAction, IErrorAction> {
+        return catchError((err) => {
+            const error = err || "Unknown Error";
+            return of({
+                type: new resource().getActionType(error.action, "error"),
+                action: error.action,
+                payload: error.payload,
+                err: error.err || error
+            });
+        });
     }
 
     /**
@@ -110,7 +131,8 @@ export class EffectHelperService {
      */
     handle<Resource extends GenericResource>(source: Actions,
                                              resource: new() => Resource,
-                                             actions: (GenericAction | GenericActionVariants)[]): Observable<Action | ResourceAction> {
+                                             actions: (GenericAction | GenericActionVariants)[]):
+        Observable<Action | ISuccessAction | IErrorAction> {
         const handlerFunctions = [
             this.selectAction(resource, actions),
             this.executeRequest(resource),

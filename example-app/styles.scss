@@ -6,7 +6,15 @@ html, body {
     margin: 0;
 }
 
-#app-component {
-    flex: 1 1 auto;
+#flex-box {
+    flex: 1;
     display: flex;
+}
+
+.snack-bar-success {
+    background-color: limegreen;
+}
+
+.snack-bar-error {
+    background-color: red;
 }

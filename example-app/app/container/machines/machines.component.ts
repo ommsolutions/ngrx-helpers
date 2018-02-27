@@ -7,7 +7,7 @@ import {tap} from "rxjs/operators/tap";
 
 import {IState, selectAllMachines} from "../../reducers";
 import {MachinesResource} from "../../resources/machines.resource";
-import {ITableDefinition} from "../../component/table/table.component";
+import {ITableDefinition} from "../../component/table";
 import {NavigatorService} from "../../services";
 
 @Component({
@@ -81,6 +81,6 @@ export class MachinesComponent implements OnInit, OnDestroy {
     }
 
     public deleteMachine(id: number) {
-        this.dispatchService.dispatch(MachinesResource, "DeleteOne", id);
+        this.dispatchService.dispatch(MachinesResource, "DeleteOne", {id});
     }
 }

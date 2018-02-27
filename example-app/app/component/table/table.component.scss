@@ -1,7 +1,7 @@
 @import "../../../styles";
 
 :host {
-    @extend #app-component;
+    @extend #flex-box;
 }
 
 .table-container {

@@ -2,6 +2,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {CommonModule, Location} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from "@ngrx/store";
@@ -16,7 +17,7 @@ import {AppComponent} from "./app.component";
 import {HomeComponent, ConfigComponent, MachinesComponent, MachineComponent, PlantsComponent} from "./container";
 import {metaReducers, reducers} from "./reducers";
 import {CustomRouterSerializer} from "./reducers/router";
-import {PlantsEffects, RouterEffects, MachinesEffects} from "./effects";
+import {NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects} from "./effects";
 import {DataService, NavigatorService, NotificationsService} from "./services";
 import {ROUTER_CONFIG, ROUTES} from "./config/router.config";
 import {CONFIG} from "./config/ngrx-helpers.config";
@@ -41,7 +42,7 @@ const COMPONENTS = [
     TableComponent
 ];
 
-const EFFECTS = [PlantsEffects, RouterEffects, MachinesEffects];
+const EFFECTS = [NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects];
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ const EFFECTS = [PlantsEffects, RouterEffects, MachinesEffects];
         BrowserAnimationsModule,
         CommonModule,
         CustomMaterialModule,
+        FormsModule,
         HttpClientModule,
         StoreModule.forRoot(reducers, {metaReducers}),
         StoreDevtoolsModule.instrument({

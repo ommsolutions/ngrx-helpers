@@ -1,8 +1,10 @@
 import {Inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import {INgrxHelpersModuleOptions} from "../ngrx-helpers.module";
+
 import {ROOT_MODULE_CONFIG} from "../tokens";
+import {IPayload} from "../utils";
+import {INgrxHelpersModuleOptions} from "../ngrx-helpers.module";
 import {GenericAction} from "../resource/generic.resource";
 
 @Injectable()
@@ -20,16 +22,19 @@ export class RestHelperService {
         }
     }
 
-    public execute<R>(action: GenericAction, path: string, id?: number): Observable<R> {
+    public execute<R>(action: GenericAction, path: string, resource?: IPayload): Observable<R> {
         switch (action) {
             case "LoadAll": {
                 return this.getResource<R>(path);
             }
             case "LoadOne": {
-                return this.getResource<R>(path, id);
+                return this.getResource<R>(path, resource.id);
             }
             case "DeleteOne": {
-                return this.deleteResource<R>(path, id);
+                return this.deleteResource<R>(path, resource.id);
+            }
+            case "UpdateOne": {
+                return this.putResource<R>(path, resource);
             }
         }
     }
@@ -40,7 +45,11 @@ export class RestHelperService {
         return this.http.get<R>(resourceUrl);
     }
 
-    public deleteResource<R>(path: string,  id: number): Observable<R> {
+    public deleteResource<R>(path: string, id: number): Observable<R> {
         return this.http.delete<R>(`${this.apiBasePath}${path}/${id}`);
+    }
+
+    public putResource<R>(path: string, resource: IPayload): Observable<R> {
+        return this.http.put<R>(`${this.apiBasePath}${path}/${resource.id}`, resource);
     }
 }

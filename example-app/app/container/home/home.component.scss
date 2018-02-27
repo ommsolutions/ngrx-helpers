@@ -1,11 +1,11 @@
 @import "../../../styles";
 
 :host {
-    @extend #app-component;
+    @extend #flex-box;
 }
 
 .home {
-    @extend #app-component;
+    @extend #flex-box;
     flex-direction: column;
     align-items: center;
 }

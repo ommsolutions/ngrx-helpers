@@ -1,2 +1,24 @@
 <h1>Machine - ID: {{(machine | async)?.id}}</h1>
-<button mat-raised-button color="primary" (click)="Navigator.back()">Go Back</button>
+<div class="container">
+    <div class="margin"></div>
+    <form #form="ngForm" (ngSubmit)="save(form)" *ngIf="editedMachine != null" class="form">
+        <mat-form-field>
+            <input matInput name="ip" placeholder="IP" [ngModel]="editedMachine.ip" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="price" placeholder="Price" [ngModel]="editedMachine.price">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="mac" placeholder="MAC" [ngModel]="editedMachine.mac">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="lastFailure" placeholder="Last Failure" [ngModel]="editedMachine.lastFailure">
+        </mat-form-field>
+        <div class="buttons">
+            <button type="button" mat-raised-button color="primary" (click)="Navigator.back()">Cancel</button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!isValid(form)">Save</button>
+        </div>
+    </form>
+    <div class="margin"></div>
+</div>
+

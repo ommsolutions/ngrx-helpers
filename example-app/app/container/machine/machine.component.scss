@@ -1,8 +1,38 @@
 @import "../../../styles";
 
 :host {
-    @extend #app-component;
+    @extend #flex-box;
     flex-direction: column;
+}
+
+.container {
+    @extend #flex-box;
+    flex-direction: row;
+
+    .margin {
+        flex: 1;
+    }
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex: 2;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+        margin: 10px;
+    }
 }
 
 h1 {

@@ -8,6 +8,13 @@ export interface IResource {
     new(...args: any[]): GenericResource;
 }
 
+
+export interface IPayload {
+    id: number;
+
+    [key: string]: any;
+}
+
 /**
  * Allows further config options for effect helpers.
  */
@@ -24,8 +31,7 @@ export interface IResourceActionOptions {
 export class ResourceAction implements Action {
     readonly type: string;
     readonly action: GenericAction;
-    readonly payload?: any;
-    readonly initialPayload?: any;
+    readonly payload?: IPayload;
     readonly options?: IResourceActionOptions;
 }
 
@@ -38,10 +44,10 @@ export class ResourceAction implements Action {
  * @param options
  * @return A action object, with all the required information.
  */
-export function createAction<Resource extends GenericResource, PayloadType>(resource: new () => Resource,
-                                                                            action: GenericAction,
-                                                                            payload?: PayloadType,
-                                                                            options?: IResourceActionOptions): ResourceAction {
+export function createAction<Resource extends GenericResource>(resource: new () => Resource,
+                                                               action: GenericAction,
+                                                               payload?: IPayload,
+                                                               options?: IResourceActionOptions): ResourceAction {
     const instance: Resource = new resource();
     const type = instance.getActionType(action);
     return {type, action, payload, options};

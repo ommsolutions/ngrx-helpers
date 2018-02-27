@@ -1,7 +1,7 @@
 <div class="home">
     <h2>Home</h2>
-    <button mat-raised-button color="primary" (click)="Navigator.navigateToPlants()">See all plants</button>
-    <button mat-raised-button color="error" (click)="Notifications.addNotification({message: 'This is a test'})">
+    <button mat-raised-button color="primary" (click)="navigatorService.navigateToPlants()">See all plants</button>
+    <button mat-raised-button color="error" (click)="testNotificationService()">
         Show Notification
     </button>
 </div>
