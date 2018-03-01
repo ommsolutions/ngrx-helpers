@@ -1,5 +1,5 @@
 # ngrx-helpers
-[![NPM version][npm-image]][npm-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 > This package can be used to reduce the amount of boilerplate code you have to write using ngrx.
 
@@ -109,3 +109,5 @@ If you want to add your own features, go ahead and create a pull-request. We app
 
 [npm-image]: https://badge.fury.io/js/%40omm%2Fngrx-helpers.svg
 [npm-url]: https://badge.fury.io/js/%40omm%2Fngrx-helpers
+[travis-image]:https://travis-ci.org/ommsolutions/ngrx-helpers.svg?branch=master
+[travis-url]:https://travis-ci.org/ommsolutions/ngrx-helpers?branch=master
