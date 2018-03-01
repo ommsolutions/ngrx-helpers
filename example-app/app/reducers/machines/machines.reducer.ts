@@ -1,5 +1,5 @@
-import {ReducerHelper, ISuccessAction} from "@omm/ngrx-helpers";
 import {EntityState} from "@ngrx/entity";
+import {ReducerHelper, ISuccessAction} from "@omm/ngrx-helpers";
 
 import {IMachine, machineAdapter, MachinesResource} from "../../resources/machines.resource";
 

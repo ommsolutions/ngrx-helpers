@@ -1,18 +1,18 @@
-<h1>Machine - ID: {{(machine | async)?.id}}</h1>
+<h1>Machine - ID: {{(machine$ | async)?.id}}</h1>
 <div class="container">
     <div class="margin"></div>
-    <form #form="ngForm" (ngSubmit)="save(form)" *ngIf="editedMachine != null" class="form">
+    <form #form="ngForm" (ngSubmit)="save(form)" *ngIf="machineCopy != null" class="form">
         <mat-form-field>
-            <input matInput name="ip" placeholder="IP" [ngModel]="editedMachine.ip" required>
+            <input matInput name="ip" placeholder="IP" [ngModel]="machineCopy.ip" required>
         </mat-form-field>
         <mat-form-field>
-            <input matInput name="price" placeholder="Price" [ngModel]="editedMachine.price">
+            <input matInput name="price" placeholder="Price" [ngModel]="machineCopy.price">
         </mat-form-field>
         <mat-form-field>
-            <input matInput name="mac" placeholder="MAC" [ngModel]="editedMachine.mac">
+            <input matInput name="mac" placeholder="MAC" [ngModel]="machineCopy.mac">
         </mat-form-field>
         <mat-form-field>
-            <input matInput name="lastFailure" placeholder="Last Failure" [ngModel]="editedMachine.lastFailure">
+            <input matInput name="lastFailure" placeholder="Last Failure" [ngModel]="machineCopy.lastFailure">
         </mat-form-field>
         <div class="buttons">
             <button type="button" mat-raised-button color="primary" (click)="Navigator.back()">Cancel</button>

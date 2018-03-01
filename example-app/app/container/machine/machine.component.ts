@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {DispatchService} from "@omm/ngrx-helpers";
 import {select, Store} from "@ngrx/store";
+import {DispatchService} from "@omm/ngrx-helpers";
 import {Subscription} from "rxjs/Subscription";
-import {tap} from "rxjs/operators/tap";
+import {tap, map} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
 
 import {NavigatorService} from "../../services";
@@ -16,10 +16,12 @@ import {IMachine, MachinesResource} from "../../resources/machines.resource";
     styleUrls: ["machine.component.scss"]
 })
 export class MachineComponent implements OnInit, OnDestroy {
-    public machine: Observable<IMachine>;
-    public editedMachine: IMachine;
-    private idSubscription: Subscription;
-    private machineSubscription: Subscription;
+    public machine$: Observable<IMachine>;
+    public machineCopy: IMachine;
+    private componentSubscriptions = new Subscription();
+
+    private loadMachine$ = this.route.params
+        .pipe(tap(params => this.loadSpecificMachine(params.id)));
 
     constructor(private dispatchService: DispatchService,
                 private route: ActivatedRoute,
@@ -28,30 +30,30 @@ export class MachineComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.idSubscription = this.route.params
-            .pipe(tap(params => {
-                    if (params.id) {
-                        // Load specific machine.
-                        const selector = selectMachine(params.id);
-                        this.machine = this.store.pipe(select(selector));
-                        this.dispatchService.dispatch(MachinesResource, "LoadOne", {id: params.id});
-                        this.machineSubscription = this.machine.subscribe(machine => this.editedMachine = machine);
-                    } else {
-                        // Navigate to the machines overview.
-                        this.Navigator.navigateToMachines();
-                    }
-                })
-            )
-            .subscribe();
+        this.componentSubscriptions.add(this.loadMachine$.subscribe());
+    }
+
+    loadSpecificMachine(id) {
+        if (id == null) {
+            // no id was found, listing all machines
+            this.Navigator.navigateToMachines();
+        }
+
+        // Get the selected machine from the store and create a copy for editing
+        this.machine$ = this.store.pipe(
+            select(selectMachine(id)),
+            map<IMachine, IMachine>(machine => this.machineCopy = {...machine})
+        );
+        // load the specified Machine
+        this.dispatchService.dispatch(MachinesResource, "LoadOne", {id});
     }
 
     ngOnDestroy(): void {
-        this.idSubscription.unsubscribe();
-        this.machineSubscription.unsubscribe();
+        this.componentSubscriptions.unsubscribe();
     }
 
     save(form) {
-        const result = {...this.editedMachine, ...form.value};
+        const result = {...this.machineCopy, ...form.value};
         this.dispatchService.dispatch(MachinesResource, "UpdateOne", result);
     }
 

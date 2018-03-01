@@ -1,1 +1,1 @@
-export {reducer as UiReducer, IState as UiState, selectLatestNotification} from "./ui.reducer";
+export {reducer as UiReducer, IState as UiState, selectCloseModals} from "./ui.reducer";

@@ -15,13 +15,13 @@ import {environment} from "../environments/environment";
 import {CustomMaterialModule} from "./custom-material.module";
 import {AppComponent} from "./app.component";
 import {HomeComponent, ConfigComponent, MachinesComponent, MachineComponent, PlantsComponent} from "./container";
+import {TableComponent, PlantInfoComponent, AddMachineComponent} from "./component";
 import {metaReducers, reducers} from "./reducers";
 import {CustomRouterSerializer} from "./reducers/router";
 import {NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects} from "./effects";
 import {DataService, NavigatorService, NotificationsService} from "./services";
 import {ROUTER_CONFIG, ROUTES} from "./config/router.config";
 import {CONFIG} from "./config/ngrx-helpers.config";
-import {TableComponent} from "./component/table";
 
 /**
  * Lists all components which represent a complete content area and can be accessible via route
@@ -39,7 +39,9 @@ const CONTAINERS = [
  * Lists all components which represent common functionality used in more than one component (e.g. a table)
  */
 const COMPONENTS = [
-    TableComponent
+    TableComponent,
+    PlantInfoComponent,
+    AddMachineComponent
 ];
 
 const EFFECTS = [NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects];
@@ -73,6 +75,7 @@ const EFFECTS = [NotificationEffects, RouterEffects, MachinesEffects, PlantsEffe
         NotificationsService,
         {provide: RouterStateSerializer, useClass: CustomRouterSerializer}
     ],
+    entryComponents: [PlantInfoComponent, AddMachineComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {

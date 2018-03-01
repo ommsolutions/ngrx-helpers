@@ -4,12 +4,12 @@ import {createEntityAdapter, EntityAdapter} from "@ngrx/entity";
 import {PlantsResource} from "./plants.resource";
 
 export interface IMachine {
-    id: number;
-    price: string;
-    lastFailure: string;
-    ip: string;
-    mac: string;
-    plantId: number;
+    id?: number;
+    price?: string;
+    lastFailure?: string;
+    ip?: string;
+    mac?: string;
+    plantId?: number;
 }
 
 export const machineAdapter: EntityAdapter<IMachine> = createEntityAdapter<IMachine>({

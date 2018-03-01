@@ -5,7 +5,7 @@ import {storeFreeze} from "ngrx-store-freeze";
 import {environment} from "../../environments/environment";
 import {PlantReducer, PlantState} from "./plants";
 import {MachineReducer, MachineState} from "./machines";
-import {UiState, UiReducer, selectLatestNotification} from "./ui";
+import {UiState, UiReducer, selectCloseModals} from "./ui";
 import * as fromPlantsResource from "../resources/plants.resource";
 import * as fromMachineResource from "../resources/machines.resource";
 import * as fromRouter from "./router";
@@ -32,7 +32,7 @@ export const reducers: ActionReducerMap<IState> = {
 
 // Log all actions to console. This is how we can construct metaReducers.
 export function logger(reducer: ActionReducer<IState>): ActionReducer<IState> {
-    return function (state: IState, action: any): IState {
+    return function(state: IState, action: any): IState {
         console.log("state", state);
         console.log("action", action);
         return reducer(state, action);
@@ -47,14 +47,17 @@ export const metaReducers: MetaReducer<IState>[] = !environment.production ? [lo
 // PLANT SELECTORS
 export const selectPlantState = createFeatureSelector<PlantState>("plants");
 export const selectAllPlants = createSelector(selectPlantState, fromPlantsResource.selectAll);
+export const selectPlantEntities = createSelector(selectPlantState, fromPlantsResource.selectEntities);
+export const selectPlant = (id: number) => createSelector(selectPlantEntities, entities => entities[id])
+    .bind(createSelector);
 
 // MACHINE SELECTORS
 export const selectMachineState = createFeatureSelector<MachineState>("machines");
 export const selectAllMachines = createSelector(selectMachineState, fromMachineResource.selectAll);
 export const selectMachineEntities = createSelector(selectMachineState, fromMachineResource.selectEntities);
 export const selectMachine = (id: number) => createSelector(selectMachineEntities, entities => entities[id])
-    .bind(createSelector);
+        .bind(createSelector);
 
 // UI SELECTORS
 export const selectUiState = createFeatureSelector<UiState>("ui");
-export const lastNotification = createSelector(selectUiState, selectLatestNotification);
+export const selectCloseModal = createSelector(selectUiState, selectCloseModals);

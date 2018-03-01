@@ -15,7 +15,7 @@ export const plantAdapter: EntityAdapter<IPlant> = createEntityAdapter<IPlant>({
     sortComparer: false
 });
 
-export const {selectAll} = plantAdapter.getSelectors();
+export const {selectAll, selectEntities} = plantAdapter.getSelectors();
 
 @resourceConfig({
     actionName: "Plants",

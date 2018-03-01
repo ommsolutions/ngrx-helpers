@@ -4,7 +4,7 @@ import {EffectHelperService, IErrorAction, ISuccessAction} from "@omm/ngrx-helpe
 import {map} from "rxjs/operators";
 
 import {MachinesResource} from "../resources/machines.resource";
-import {AddNotification} from "../actions/ui.actions";
+import {AddNotification, CloseModals} from "../actions/ui.actions";
 
 
 @Injectable()
@@ -22,6 +22,9 @@ export class MachinesEffects {
     }, {
         action: "UpdateOne",
         variants: ["success"]
+    }, {
+        action: "CreateOne",
+        variants: ["success"]
     }]);
 
     private errorNotificationSelector = this.effectHelperService.selectAction(MachinesResource, [{
@@ -35,12 +38,13 @@ export class MachinesEffects {
         variants: ["error"]
     }]);
 
+    private closeModalSelector = this.effectHelperService.selectAction(MachinesResource, [{
+        action: "CreateOne",
+        variants: ["success"]
+    }]);
+
     @Effect()
-    genericMachineActions$ = this.effectHelperService.handle(
-        this.actions$,
-        MachinesResource,
-        ["LoadAll", "LoadOne", "DeleteOne", "UpdateOne"]
-    );
+    genericMachineActions$ = this.effectHelperService.handle(this.actions$, MachinesResource);
 
     @Effect()
     signalSuccess$ = this.actions$.pipe(
@@ -60,6 +64,12 @@ export class MachinesEffects {
                 message: `Error executing: ${action.action}`,
                 config: {panelClass: "snack-bar-error"}
             })))
+    );
+
+    @Effect()
+    closeModal$ = this.actions$.pipe(
+        this.closeModalSelector,
+        map(() => (new CloseModals()))
     );
 
     constructor(private actions$: Actions,

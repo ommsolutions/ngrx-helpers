@@ -126,12 +126,14 @@ export class EffectHelperService {
      *
      * @param source The source observable which provides the actions dispatched.
      * @param resource The resource which should be handled.
-     * @param actions The actions which should be handled.
+     * @param actions The actions which should be handled. Handles ["LoadAll", "LoadOne", "DeleteOne", "UpdateOne", "CreateOne"] if
+     * nothing is specified.
      * @return An observable emitting the success or error actions based on the request state.
      */
     handle<Resource extends GenericResource>(source: Actions,
                                              resource: new() => Resource,
-                                             actions: (GenericAction | GenericActionVariants)[]):
+                                             actions: (GenericAction | GenericActionVariants)[] =
+                                                 ["LoadAll", "LoadOne", "DeleteOne", "UpdateOne", "CreateOne"]):
         Observable<Action | ISuccessAction | IErrorAction> {
         const handlerFunctions = [
             this.selectAction(resource, actions),

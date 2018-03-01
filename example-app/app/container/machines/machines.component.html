@@ -1,2 +1,5 @@
 <h1>Machines</h1>
-<app-table [tableData]="machines | async" [tableDefinition]="tableDefinition"></app-table>
+<app-table [tableData]="machines$ | async" [tableDefinition]="tableDefinition"></app-table>
+<button mat-fab id="add-button" color="primary" (click)="openAddMachineModal()">
+    <i class="material-icons" style="font-size: 24px">add</i>
+</button>

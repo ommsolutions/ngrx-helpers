@@ -19,6 +19,6 @@ export class HomeComponent {
     }
 
     testNotificationService() {
-        this.store.dispatch(new AddNotification({message: "This is a test"}));
+        this.store.dispatch(new AddNotification({message: "Hello there ;-)"}));
     }
 }

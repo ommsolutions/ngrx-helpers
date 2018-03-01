@@ -1,10 +1,20 @@
 import {NgModule} from "@angular/core";
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatToolbarModule} from "@angular/material";
+import {MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatToolbarModule} from "@angular/material";
 import {CdkTableModule} from "@angular/cdk/table";
 
+const MODULES = [
+    MatButtonModule,
+    MatToolbarModule,
+    CdkTableModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule
+];
+
 @NgModule({
-    imports: [MatButtonModule, MatToolbarModule, CdkTableModule, MatSnackBarModule, MatFormFieldModule, MatInputModule],
-    exports: [MatButtonModule, MatToolbarModule, CdkTableModule, MatSnackBarModule, MatFormFieldModule, MatInputModule]
+    imports: [...MODULES],
+    exports: [...MODULES]
 })
 export class CustomMaterialModule {
     //

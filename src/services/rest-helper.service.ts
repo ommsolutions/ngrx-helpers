@@ -36,6 +36,9 @@ export class RestHelperService {
             case "UpdateOne": {
                 return this.putResource<R>(path, resource);
             }
+            case "CreateOne": {
+                return this.postResource<R>(path, resource);
+            }
         }
     }
 
@@ -51,5 +54,9 @@ export class RestHelperService {
 
     public putResource<R>(path: string, resource: IPayload): Observable<R> {
         return this.http.put<R>(`${this.apiBasePath}${path}/${resource.id}`, resource);
+    }
+
+    public postResource<R>(path: string, resource: IPayload): Observable<R> {
+        return this.http.post<R>(`${this.apiBasePath}${path}`, resource);
     }
 }

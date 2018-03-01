@@ -28,6 +28,10 @@ export class ReducerHelper {
                 return eAdapter.updateOne({id: action.payload.id, changes}, state);
             }
 
+            case resourceInstance.getActionType("CreateOne", "success"): {
+                return eAdapter.addOne(action.response, state);
+            }
+
             default: {
                 return state;
             }

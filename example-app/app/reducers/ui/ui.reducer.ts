@@ -9,17 +9,27 @@ export interface INotification {
 
 export interface IState {
     notifications: INotification[];
+    closeModals: any;
 }
 
 export const initialState: IState = {
-    notifications: []
+    notifications: [],
+    closeModals: false
 };
 
 export function reducer(state: IState = initialState, action: UiActions): IState {
     switch (action.type) {
         case UiActionTypes.ADD_NOTIFICATION: {
             return {
+                ...state,
                 notifications: [...state.notifications, action.payload]
+            };
+        }
+
+        case UiActionTypes.CLOSE_MODALS: {
+            return {
+                ...state,
+                closeModals: true
             };
         }
 
@@ -29,6 +39,4 @@ export function reducer(state: IState = initialState, action: UiActions): IState
     }
 }
 
-export const selectLatestNotification = (state: IState) => state.notifications.length > 0
-    ? state.notifications[state.notifications.length - 1]
-    : undefined;
+export const selectCloseModals = (state: IState) => state.closeModals;
