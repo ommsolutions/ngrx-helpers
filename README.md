@@ -1,5 +1,5 @@
 # ngrx-helpers
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codacy Badge][codacy-image]][codacy-url]
 
 > This package can be used to reduce the amount of boilerplate code you have to write using ngrx.
 
@@ -113,3 +113,5 @@ If you want to add your own features, go ahead and create a pull-request. We app
 [travis-url]: https://travis-ci.org/ommsolutions/ngrx-helpers?branch=master
 [coveralls-image]: https://coveralls.io/repos/github/ommsolutions/ngrx-helpers/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/ommsolutions/ngrx-helpers?branch=master
+[codacy-image]: https://api.codacy.com/project/badge/Grade/56c25e0de47445d699ab84040d966c77
+[codacy-url]: https://www.codacy.com/app/enenkel/ngrx-helpers?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ommsolutions/ngrx-helpers&amp;utm_campaign=Badge_Grade
