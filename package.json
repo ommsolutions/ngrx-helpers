@@ -21,6 +21,7 @@
         "test": "ng test",
         "test:ci": "ng test --code-coverage --no-watch --config=karma.ci.conf.js",
         "coveralls": "ls -la ./ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "codacy": "ls -la ./ && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p .",
         "lint": "ng lint",
         "e2e": "ng e2e",
         "build:lib": "ng-packagr -p src/package.json"
@@ -53,6 +54,7 @@
         "@types/jasmine": "~2.8.3",
         "@types/jasminewd2": "~2.0.2",
         "@types/node": "~6.0.60",
+        "codacy-coverage": "^2.1.0",
         "codelyzer": "^4.0.1",
         "coveralls": "^3.0.0",
         "jasmine-core": "~2.8.0",
