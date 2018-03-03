@@ -24,7 +24,13 @@ module.exports = function (config) {
         colors: false,
         logLevel: config.LOG_DEBUG,
         autoWatch: true,
-        browsers: ["ChromeHeadless"],
+        browsers: ["ChromeHeadlessNoSandbox"],
+        customLaunchers: {
+            ChromeHeadlessNoSandbox: {
+                base: "ChromeHeadless",
+                flags: ["--no-sandbox"]
+            }
+        },
         singleRun: true
     });
 };
