@@ -24,13 +24,7 @@ module.exports = function (config) {
         colors: false,
         logLevel: config.LOG_DEBUG,
         autoWatch: true,
-        browsers: ["Chrome_travis_ci"],
-        customLaunchers: {
-            Chrome_travis_ci: {
-                base: "Chrome",
-                flags: ["--no-sandbox"]
-            }
-        },
+        browsers: ["ChromeHeadless"],
         singleRun: true
     });
 };
