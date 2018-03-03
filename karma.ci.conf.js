@@ -13,15 +13,13 @@ module.exports = function (config) {
             require("@angular/cli/plugins/karma")
         ],
         coverageIstanbulReporter: {
-            reports: ["html", "lcovonly"],
+            reports: ["lcovonly"],
             fixWebpackSourcePaths: true
         },
         angularCli: {
             environment: "dev"
         },
-        reporters: config.angularCli && config.angularCli.codeCoverage
-            ? ["progress", "coverage-istanbul"]
-            : ["progress", "kjhtml"],
+        reporters: ["progress", "coverage-istanbul"],
         port: 9876,
         colors: false,
         logLevel: config.LOG_DEBUG,

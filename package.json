@@ -20,6 +20,7 @@
         "build:prod": "ng build --prod --aot --sourcemap",
         "test": "ng test",
         "test:ci": "ng test --no-watch --config=karma.ci.conf.js",
+        "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "lint": "ng lint",
         "e2e": "ng e2e",
         "build:lib": "ng-packagr -p src/package.json"
@@ -53,6 +54,7 @@
         "@types/jasminewd2": "~2.0.2",
         "@types/node": "~6.0.60",
         "codelyzer": "^4.0.1",
+        "coveralls": "^3.0.0",
         "jasmine-core": "~2.8.0",
         "jasmine-spec-reporter": "~4.2.1",
         "karma": "~2.0.0",
