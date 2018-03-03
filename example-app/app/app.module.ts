@@ -26,7 +26,7 @@ import {CONFIG} from "./config/ngrx-helpers.config";
 /**
  * Lists all components which represent a complete content area and can be accessible via route
  */
-const CONTAINERS = [
+export const CONTAINERS = [
     AppComponent,
     HomeComponent,
     ConfigComponent,
@@ -38,13 +38,13 @@ const CONTAINERS = [
 /**
  * Lists all components which represent common functionality used in more than one component (e.g. a table)
  */
-const COMPONENTS = [
+export const COMPONENTS = [
     TableComponent,
     PlantInfoComponent,
     AddMachineComponent
 ];
 
-const EFFECTS = [NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects];
+export const EFFECTS = [NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects];
 
 @NgModule({
     declarations: [
