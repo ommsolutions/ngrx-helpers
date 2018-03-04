@@ -2,7 +2,7 @@
  * Static test for the library test code
  */
 import {ISuccessAction, ReducerHelper} from "@omm/ngrx-helpers";
-import {IPlant, PlantsResource} from "../resources/plants.resource";
+import {IPlant, PlantsResource} from "../app/resources/plants.resource";
 import {EntityState} from "@ngrx/entity";
 
 describe("reducer-helper", () => {

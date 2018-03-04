@@ -76,7 +76,7 @@ export function resourceConfig(config: IResourceConfig) {
  * Validates the provided configuration.
  * @return true, if it is valid, false o/w.
  */
-function validateResource(config: IResourceConfig) {
+export function validateResource(config: IResourceConfig) {
     const {actionName, entityAdapter, parentResource, resourcePath} = config;
     // actionName exists and is at least one character long
     const isActionNameDefined = actionName != null && actionName.length > 0;
