@@ -6,7 +6,7 @@ import {IPlant, PlantsResource} from "../resources/plants.resource";
 import {EntityState} from "@ngrx/entity";
 
 describe("reducer-helper", () => {
-    let plantResource: PlantsResource;
+    const plantResource: PlantsResource = new PlantsResource();
     const plants: IPlant[] = [{
         "id": 1,
         "city": "Devonstad",
@@ -22,12 +22,6 @@ describe("reducer-helper", () => {
         "country": "Saint Pierre and Miquelon",
         "description": "est dignissimos et"
     }];
-
-    beforeAll(() => {
-        plantResource = new PlantsResource();
-
-    });
-
 
     it("Should add all", () => {
         const LoadAllSuccessAction: ISuccessAction = {
