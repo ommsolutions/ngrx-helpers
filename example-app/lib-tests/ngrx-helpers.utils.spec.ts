@@ -1,9 +1,9 @@
 import {GenericResource, resourceConfig} from "@omm/ngrx-helpers";
-import {IMachine, MachinesResource} from "../app/resources/machines.resource";
-import {createEntityAdapter, EntityAdapter} from "@ngrx/entity";
+import {MachinesResource} from "../app/resources/machines.resource";
 import {PlantsResource} from "../app/resources/plants.resource";
 import {createAction, flattenActionTypeArray, isGenericActionVariant} from "../../src/utils";
 import {GenericActionVariants} from "../../src/resource";
+import {MissingEntityAdapterResource, MissingNameResourceConfig, MissingResourcePathConfig, TestResource} from "./test-resources";
 
 describe("Ngrx helper utils", () => {
 
@@ -12,10 +12,8 @@ describe("Ngrx helper utils", () => {
     });
 
     it("Should mark resource als invalid, if actionName is not defined and print error to console", () => {
-        @resourceConfig({
-            actionName: undefined,
-            entityAdapter: undefined
-        })
+
+        @resourceConfig(MissingNameResourceConfig)
         class InvalidResource extends GenericResource {
         }
 
@@ -24,10 +22,7 @@ describe("Ngrx helper utils", () => {
     });
 
     it("Should mark resource als invalid, if entityAdapter is not defined and print error to console", () => {
-        @resourceConfig({
-            actionName: "InvalidResource",
-            entityAdapter: undefined
-        })
+        @resourceConfig(MissingEntityAdapterResource)
         class InvalidResource extends GenericResource {
         }
 
@@ -36,16 +31,7 @@ describe("Ngrx helper utils", () => {
     });
 
     it("Should print error to console, if resourcePath is not defined when parentResource is specified", () => {
-        const machineAdapter: EntityAdapter<IMachine> = createEntityAdapter<IMachine>({
-            selectId: (machine: IMachine) => machine.id,
-            sortComparer: false
-        });
-
-        @resourceConfig({
-            actionName: "ValidResource",
-            entityAdapter: machineAdapter,
-            parentResource: MachinesResource
-        })
+        @resourceConfig(MissingResourcePathConfig)
         class ValidResource extends GenericResource {
         }
 
@@ -53,7 +39,7 @@ describe("Ngrx helper utils", () => {
         expect(new ValidResource().isValid).toBe(true);
     });
 
-    it("Should example-app resources as valid", () => {
+    it("Should mark example-app resources as valid", () => {
         expect(new PlantsResource().isValid).toBe(true);
         expect(new MachinesResource().isValid).toBe(true);
     });
@@ -75,19 +61,19 @@ describe("Ngrx helper utils", () => {
     });
 
     it("Should create action", () => {
-        const resourceAction = createAction(MachinesResource, "LoadAll");
+        const resourceAction = createAction(TestResource, "LoadAll");
         expect(resourceAction).toBeTruthy();
         expect(resourceAction.type).toBeTruthy();
         expect(resourceAction.action).toEqual("LoadAll");
 
-        const resourceActionP = createAction(MachinesResource, "LoadAll", {id: 5});
+        const resourceActionP = createAction(TestResource, "LoadAll", {id: 5});
         expect(resourceActionP).toBeTruthy();
         expect(resourceActionP.type).toBeTruthy();
         expect(resourceActionP.action).toEqual("LoadAll");
         expect(resourceActionP.payload).toBeTruthy();
         expect(resourceActionP.payload.id).toEqual(5);
 
-        const resourceActionPO = createAction(MachinesResource, "LoadAll", {id: 5}, {parentRef: 3});
+        const resourceActionPO = createAction(TestResource, "LoadAll", {id: 5}, {parentRef: 3});
         expect(resourceActionPO).toBeTruthy();
         expect(resourceActionPO.type).toBeTruthy();
         expect(resourceActionPO.action).toEqual("LoadAll");

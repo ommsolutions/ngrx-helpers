@@ -14,12 +14,12 @@ import {NgrxHelpersModule} from "@omm/ngrx-helpers";
 import {environment} from "../environments/environment";
 import {CustomMaterialModule} from "./custom-material.module";
 import {AppComponent} from "./app.component";
-import {HomeComponent, ConfigComponent, MachinesComponent, MachineComponent, PlantsComponent} from "./container";
-import {TableComponent, PlantInfoComponent, AddMachineComponent} from "./component";
+import {ConfigComponent, HomeComponent, MachineComponent, MachinesComponent, PlantsComponent} from "./container";
+import {AddMachineComponent, PlantInfoComponent, TableComponent} from "./component";
 import {metaReducers, reducers} from "./reducers";
 import {CustomRouterSerializer} from "./reducers/router";
-import {NotificationEffects, RouterEffects, MachinesEffects, PlantsEffects} from "./effects";
-import {DataService, NavigatorService, NotificationsService} from "./services";
+import {MachinesEffects, NotificationEffects, PlantsEffects, RouterEffects} from "./effects";
+import {NavigatorService, NotificationsService} from "./services";
 import {ROUTER_CONFIG, ROUTES} from "./config/router.config";
 import {CONFIG} from "./config/ngrx-helpers.config";
 
@@ -69,7 +69,6 @@ export const EFFECTS = [NotificationEffects, RouterEffects, MachinesEffects, Pla
         NgrxHelpersModule.forRoot(CONFIG)
     ],
     providers: [
-        DataService,
         NavigatorService,
         Location,
         NotificationsService,
