@@ -47,7 +47,7 @@
         "zone.js": "^0.8.19"
     },
     "devDependencies": {
-        "@angular/cli": "1.6.6",
+        "@angular/cli": "~1.7.3",
         "@angular/compiler": "^5.2.0",
         "@angular/compiler-cli": "^5.2.0",
         "@ngrx/store-devtools": "^5.0.1",
@@ -64,7 +64,7 @@
         "karma-coverage-istanbul-reporter": "^1.2.1",
         "karma-jasmine": "~1.1.0",
         "karma-jasmine-html-reporter": "^0.2.2",
-        "ng-packagr": "^2.0.0",
+        "ng-packagr": "~2.2.0",
         "ngrx-store-freeze": "^0.2.1",
         "protractor": "~5.1.2",
         "ts-node": "~4.1.0",
