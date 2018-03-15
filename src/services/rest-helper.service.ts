@@ -10,7 +10,7 @@ import {GenericAction} from "../resource/generic.resource";
 @Injectable()
 export class RestHelperService {
 
-    private apiBasePath: string;
+    readonly apiBasePath: string;
 
     constructor(private http: HttpClient, @Inject(ROOT_MODULE_CONFIG) config: INgrxHelpersModuleOptions) {
         if (!config.apiBasePath) {
@@ -22,22 +22,22 @@ export class RestHelperService {
         }
     }
 
-    public execute<R>(action: GenericAction, path: string, resource?: IPayload): Observable<R> {
+    public execute<R>(action: GenericAction, path: string, payload?: IPayload): Observable<R> {
         switch (action) {
             case "LoadAll": {
                 return this.getResource<R>(path);
             }
             case "LoadOne": {
-                return this.getResource<R>(path, resource.id);
+                return this.getResource<R>(path, payload.id);
             }
             case "DeleteOne": {
-                return this.deleteResource<R>(path, resource.id);
+                return this.deleteResource<R>(path, payload.id);
             }
             case "UpdateOne": {
-                return this.putResource<R>(path, resource);
+                return this.putResource<R>(path, payload);
             }
             case "CreateOne": {
-                return this.postResource<R>(path, resource);
+                return this.postResource<R>(path, payload);
             }
         }
     }
