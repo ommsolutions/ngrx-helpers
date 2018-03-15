@@ -1,5 +1,6 @@
 import {EntityAdapter} from "@ngrx/entity";
 import {IResourceConfig} from "./resource-config.interface";
+import {validateResource} from "../utils";
 
 export type GenericAction = "LoadAll" | "LoadOne" | "CreateOne" | "UpdateOne" | "DeleteOne";
 export type GenericActionTypesVariants = "success" | "error" | "request";
@@ -16,24 +17,19 @@ export class GenericActionVariants {
  *
  *  Extending class can optionally provide:
  *  - "resourcePath" -> Required when using the ngrx-rest-data.service
- *  - "supportedActionTypes" -> Adds limitation to specific action types. By default, all action types are permitted.
+ *  - "supportedActions" -> Adds limitation to specific action types. By default, all action types are permitted.
  *  - "payloadValidators" -> Adds validators for each action type if specified, to check payload for validity.
  */
 export class GenericResource implements IResourceConfig {
     actionName: string;
     entityAdapter: EntityAdapter<any>;
     resourcePath: string;
-    supportedActionTypes?: GenericAction[];
+    supportedActions?: GenericAction[];
     parentResource?: new () => GenericResource;
     isValid: boolean;
 
-    constructor() {
-        if (this.isValid === false) {
-            console.warn(`The resource ${this.actionName} is not valid. This might cause errors!`);
-        }
-    }
-
     public getEntityAdapter() {
+        this.warnIfInvalidResource();
         return this.entityAdapter;
     }
 
@@ -43,6 +39,10 @@ export class GenericResource implements IResourceConfig {
      * @return The resourcePath according to the parentRef
      */
     public getResourcePath(parentRef?: string | number): string {
+        this.warnIfInvalidResource();
+        if (this.resourcePath == null) {
+            return undefined;
+        }
         if (parentRef != null) {
             const parentInstance = new this.parentResource();
             return `${parentInstance.getResourcePath()}/${parentRef}${this.resourcePath}`;
@@ -69,10 +69,11 @@ export class GenericResource implements IResourceConfig {
      * @return Returns the generated action type (format: "ngrx-helper: [<actionName>] <action> - <actionVariant>")
      */
     public getActionType(action: GenericAction, variant: GenericActionTypesVariants = "request"): string {
+        this.warnIfInvalidResource();
 
-        if (this.supportedActionTypes && this.supportedActionTypes.indexOf(action) === -1) {
-            throw new Error(`The provided type is not supported by this action class, provided types are:
-            ${this.supportedActionTypes.join(",")}`);
+        if (this.supportedActions && this.supportedActions.indexOf(action) === -1) {
+            throw new Error(`The provided action is not supported by this resource, provided types are:
+            ${this.supportedActions.join(",")}`);
         }
 
         return `ngrx-helpers: [${this.actionName}] ${action} - ${variant}`;
@@ -86,7 +87,6 @@ export class GenericResource implements IResourceConfig {
         const {variants, action} = actionVariants;
         const actionTypes: string[] = [];
         if (variants == null || variants.length === 0) {
-            // return the default variant
             actionTypes.push(this.getActionType(action));
             return actionTypes;
         }
@@ -96,5 +96,12 @@ export class GenericResource implements IResourceConfig {
         }
 
         return actionTypes;
+    }
+
+    private warnIfInvalidResource() {
+        if (this.isValid) {
+            return;
+        }
+        validateResource(this);
     }
 }

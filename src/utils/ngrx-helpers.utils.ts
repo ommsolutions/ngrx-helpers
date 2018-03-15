@@ -1,5 +1,15 @@
 import {Action} from "@ngrx/store";
-import {GenericResource, GenericAction, IResourceConfig, GenericActionVariants} from "../resource";
+import {GenericAction, GenericActionVariants, GenericResource, IResourceConfig} from "../resource";
+
+export const MISSING_ACTIONNAME_MSG = "The actionName of the resource is not defined. " +
+    "This can lead to ambiguous action types which can break your application! " +
+    "Please verify that the actionName is properly set in the resourceConfig.";
+
+export const MISSING_ENTITYADAPTER_MSG = "EntityAdapter has to be defined, but is undefined. " +
+    "Please verify that the entityAdapter is properly set in the resourceConfig.";
+
+export const MISCONFIGURED_PARENT_RESOURCE_MSG = "ParentResource requires resourcePath to have an effect, but resourcePath is undefined." +
+    "Please verify that the resourcePath is properly set in the resourceConfig.";
 
 /**
  * Interface to reference any subtype of the GenericResource
@@ -60,7 +70,7 @@ export function createAction<Resource extends GenericResource>(resource: new () 
  */
 export function resourceConfig(config: IResourceConfig) {
     return function decorator<T extends IResource>(resourceClass: T): T {
-        const isValid = validateResource(config);
+        const isValid = validateResource(config, "error");
         return class extends resourceClass {
             // assign the config values to the resource class constructor.
             actionName = config.actionName;
@@ -73,32 +83,37 @@ export function resourceConfig(config: IResourceConfig) {
 }
 
 /**
- * Validates the provided configuration.
+ * Validates the provided configuration. Logs warnings / errors based on logLevel for every validation error.
+ * @param config The configuration to validate
+ * @param logLevel The logLevel (warn or error) with which findings will be logged.
  * @return true, if it is valid, false o/w.
  */
-export function validateResource(config: IResourceConfig) {
+export function validateResource(config: IResourceConfig, logLevel: "warn" | "error" = "warn") {
     const {actionName, entityAdapter, parentResource, resourcePath} = config;
+    const validationErrors = [];
     // actionName exists and is at least one character long
     const isActionNameDefined = actionName != null && actionName.length > 0;
     // Entity adapter has to be defined
     const isEntityAdapterDefined = entityAdapter != null;
     // ParentReference requires resourcePath
+    const isParentResourceConfiguredProperly = (parentResource != null && resourcePath != null) || parentResource == null;
 
     if (!isActionNameDefined) {
-        console.error("ActionName has to be defined, but is undefined.");
+        validationErrors.push(MISSING_ACTIONNAME_MSG);
     }
     if (!isEntityAdapterDefined) {
-        console.error("EntityAdapter has to be defined, but is undefined.");
+        validationErrors.push(MISSING_ENTITYADAPTER_MSG);
     }
-    if (parentResource != null && resourcePath == null) {
-        console.error("ParentResource requires resourcePath to have an effect.");
+    if (!isParentResourceConfiguredProperly) {
+        validationErrors.push(MISCONFIGURED_PARENT_RESOURCE_MSG);
     }
-
-    const isValid = isActionNameDefined && isEntityAdapterDefined;
-    if (!isValid) {
-        console.error(`Resource: "${actionName}" could not be created. all related actions will probably fail`);
+    const isValid = validationErrors.length === 0;
+    if (isValid) {
+        return isValid;
+    } else {
+        validationErrors.forEach((msg) => console[logLevel](msg));
+        return false;
     }
-    return isValid;
 }
 
 /**
@@ -116,5 +131,5 @@ export function flattenActionTypeArray(actionTypes: (string | string[])[]): stri
  * @return True if it is of type GenericActionVariants, false o/w.
  */
 export function isGenericActionVariant(action: GenericAction | GenericActionVariants): boolean {
-    return action instanceof Object && (<GenericActionVariants>action).action != null;
+    return (typeof action === "object") && action.action != null;
 }

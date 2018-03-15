@@ -22,10 +22,13 @@ const testAdapter: EntityAdapter<ITestResource> = createEntityAdapter<ITestResou
     sortComparer: false
 });
 
-@resourceConfig({
+export const ValidResourceConfig = {
     actionName: "TestResource",
-    entityAdapter: testAdapter
-})
+    entityAdapter: testAdapter,
+    resourcePath: "/resource"
+};
+
+@resourceConfig(ValidResourceConfig)
 export class TestResource extends GenericResource {
 }
 

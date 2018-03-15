@@ -36,7 +36,7 @@ describe("Ngrx helper utils", () => {
         }
 
         expect(console.error).toHaveBeenCalled();
-        expect(new ValidResource().isValid).toBe(true);
+        expect(new ValidResource().isValid).toBe(false);
     });
 
     it("Should mark example-app resources as valid", () => {
