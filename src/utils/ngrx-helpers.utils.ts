@@ -20,7 +20,7 @@ export interface IResource {
 
 
 export interface IPayload {
-    id: number;
+    id?: number;
 
     [key: string]: any;
 }
