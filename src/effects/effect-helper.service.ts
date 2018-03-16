@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Action} from "@ngrx/store";
-import {ofType, Actions} from "@ngrx/effects";
+import {Actions, ofType} from "@ngrx/effects";
 import {HttpErrorResponse} from "@angular/common/http";
 import {OperatorFunction} from "rxjs/interfaces";
 import {catchError, map, mergeMap} from "rxjs/operators";
@@ -9,7 +9,7 @@ import {of} from "rxjs/observable/of";
 import "rxjs/add/observable/throw";
 
 import {RestHelperService} from "../services";
-import {GenericResource, GenericAction, GenericActionVariants} from "../resource";
+import {GenericAction, GenericActionVariants, GenericResource} from "../resource";
 import {flattenActionTypeArray, IPayload, isGenericActionVariant, ResourceAction} from "../utils";
 
 export interface ISuccessAction extends Action {
@@ -105,6 +105,12 @@ export class EffectHelperService {
 
     /**
      * Creates a function which catches an error and maps it to an error action for the specified resource.
+     *
+     * Pay attention, that the error function will complete the observable! In most cases, you want the observable stream of an effect
+     * to stay active, therefore wrap this call in a flattening operator (e.g. mergeMap, switchMap, concatMap, ...)
+     *
+     * actions$.pipe(mergeMap(action => of(action).pipe(...[yourRequestHandler, handleErrorResponse])))
+     *
      * @param resource The resource which is affected by the error.
      * @return the generated catchError function which creates the error action.
      */
@@ -141,6 +147,6 @@ export class EffectHelperService {
             this.handleSuccessResponse(resource),
             this.handleErrorResponse(resource)
         ];
-        return source.pipe(...handlerFunctions);
+        return source.pipe(mergeMap(action => of(action).pipe(...handlerFunctions)));
     }
 }

@@ -40,7 +40,7 @@ describe("Dispatch service", () => {
         TestBed.configureTestingModule({
             imports: [...getNgrxImports([TestEffects]), HttpClientTestingModule, NgrxHelpersModule.forRoot(CONFIG)],
             providers: []
-        }).compileComponents();
+        });
         dispatchService = TestBed.get(DispatchService);
         testEffects = TestBed.get(TestEffects);
         effectSpy = createSpy("EffectSpy");
