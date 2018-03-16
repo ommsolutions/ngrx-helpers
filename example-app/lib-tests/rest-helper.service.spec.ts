@@ -7,6 +7,7 @@ import {HttpClientTestingModule, HttpTestingController} from "@angular/common/ht
 import {CONFIG} from "../app/config/ngrx-helpers.config";
 import "rxjs/add/observable/from";
 import {HttpClient} from "@angular/common/http";
+import {selectId} from "./test-resources";
 
 describe("REST helper service", () => {
 
@@ -82,7 +83,7 @@ describe("REST helper service", () => {
         restHelperService.execute("UpdateOne", endpoint, payload)
             .subscribe((res) => console.log("--> res", res));
 
-        const req = httpTestingController.expectOne(fullPath + "/" + payload.id);
+        const req = httpTestingController.expectOne(fullPath + "/" + selectId(<any>payload));
         expect(req.request.method).toEqual("PUT");
         req.flush(response);
     });

@@ -2,7 +2,6 @@ import {Component, Inject} from "@angular/core";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {DispatchService} from "@omm/ngrx-helpers";
 
-import {PlantInfoComponent} from "../plant-info";
 import {IMachine, MachinesResource} from "../../resources/machines.resource";
 
 @Component({
@@ -51,7 +50,7 @@ export class AddMachineComponent {
     public parent: number;
     public newMachine: IMachine = {};
 
-    constructor(public dialogRef: MatDialogRef<PlantInfoComponent>,
+    constructor(public dialogRef: MatDialogRef<AddMachineComponent>,
                 private dispatchService: DispatchService,
                 @Inject(MAT_DIALOG_DATA) public data: { parent: number }) {
         this.parent = data.parent;
@@ -67,7 +66,7 @@ export class AddMachineComponent {
     }
 
     isValid(value) {
-        return value.ip && value.price && value.mac && value.lastFailure;
+        return value.ip != null && value.price != null && value.mac != null && value.lastFailure != null;
     }
 
 }

@@ -17,8 +17,10 @@ export interface ITestResource {
     value: number;
 }
 
+export const selectId = (test: ITestResource) => test.id;
+
 const testAdapter: EntityAdapter<ITestResource> = createEntityAdapter<ITestResource>({
-    selectId: (test: ITestResource) => test.id,
+    selectId,
     sortComparer: false
 });
 
