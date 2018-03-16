@@ -7,90 +7,126 @@
 
 Install by using ``npm install --save @omm/ngrx-helpers``
 
-To function properly, this package has some peer dependencies, which have to be installed as well:
+To function properly, this package has some peer dependencies, which have to be installed as well.
+
+To use the module, just add it to your angular module:
+
+```
+@NgModule({
+    imports: [
+        NgrxHelpersModule.forRoot({apiBasePath: "http://localhost:3000"})
+    ]
+})
+export class AppModule {
+}
+```
+
+## TL;DR
+
+To reduce the amount of boilerplate code in ngrx projects, this package uses a construct we call "resource".
+A resource is configured at application start and the configuration is used during runtime to generate actions, 
+select them in effects and much more.  
+The ngrx library will not be patched or edited in any way. 
+Hence, you can always move away from this library if you need a more customized implementation.
 
 
 ## Usage
 
-TODO
+The goal of this project is to provide a library which can be selectively applied to your project, 
+just the way you need it to and not just as a whole. 
+All usages are tested and displayed in the example-app provided in this repository. To run the example-app refer to chapter **example-app**.
 
-This package provides helpers for:
+Summarizing, this project provides helpers for:
 * effects
 * reducers
 * actions
+* rest calls
 
-### Config
+To use these helpers, you are required to create a resource and configure it.
 
-### All of it!
+### Config of resources
 
-TODO
+Resource in example-app: [PlantsResource](\example-app\app\resources\plants.resource.ts)
 
-### Custom usages
+### Reducers
 
-TODO
+Based on a configured resource, the substate for that resource can be managed by a generic reducer (powered by ngrx entity).
+Below reducer adjusts the state according to each of the possible resource's actions.
 
-## repository
+```
+export function reducer(state: EntityState<IMachine> = initialState, action: ISuccessAction): IState {
+    return ReducerHelper.genericReducer<IMachine, MachinesResource>(state, action, MachinesResource);
+}
+```
 
-### src
+### Effects
 
-TODO
+#### Handle all actions of a resource
 
-### example-app
+Below code-snippet displays how you can handle all actions concerning one resource in just 2 lines of code.
+This includes:
+ * selecting all relvant actions
+ * requesting the resources from the backend
+ * transforming error or success responses to the appropriate actions, which then will be handled by the genericReducer
+
+``` 
+@Effect()
+genericMachineActions$ = this.effectHelperService.handle(this.actions$, MachinesResource);
+```
+
+### Actions
+
+Actions are no longer implemented manually, but are generically generated from your resource configuration. For instance, 
+below function will create a ngrx action, to load one element (identified by its ID) of the TestResource.
+
+```
+createAction(TestResource, "LoadOne", {id: 5})
+```
+
+Above function call returns below action object (ngrx conform):
+
+```
+{
+    "type": "ngrx-helpers: [TestResource] LoadOne - request",
+    "action": "LoadOne",
+    "payload": {
+        "id": 5
+    }
+}
+```
+
+
+### Dispatch Service
+
+Helper to shortcut creation of a resource action and dispatching it to the ngrx store. Below code snippet creates an action, 
+requesting the update of the object "newValues" (object is identified by some kind of id). 
+
+```
+this.dispatchService.dispatch(MachinesResource, "UpdateOne", newValues);
+```
+
+### Rest Helper Service
+
+REST APIs are should use a defined structure how to execute certain acions (e.g. get all elements of a specific path)
+According to this specification, the restHelperService provides a httpClient implementation, which provides CRUD features.
+
+## example-app
 
 For development, we use the [example-app](./example-app) generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.6.
 In this project, you can find the various use cases of the library and how example configurations might look like.
 As the project evolves, we will try to keep up with the latest angular-cli and ngrx releases to ensure compatibility.
 
-**For development**
-* Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-* Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-* Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### To run the example:  
 
-### testing and test coverage
+**Frontend**
+* ``npm install``
+* Run `ng serve` for a dev server. 
+* Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Action type pattern
-
-TODO
-
-## Features 
-
-For current features, check the [Changelog](CHANGELOG.md)
-
-## Roadmap
-
-**0.2.0 config extensions**
-
-* Retry logic for HTTP calls
-* Add config to choose if request should be cancelled when executed again
-* Skip specific steps of the generic handle function
-
-**0.1.0 Initial release**
-
-Features:
-
-* ...
-
-TODO: 
-* apply validators when creating new actions
-* Include ngrx / entity
-* Make API Path configurable
-* Make execute request generic based on the actionType
-* Implement generic reducer helper
-* Make generic type of extendedAction optional
-* Adjust readme
-* Document example-app
-* Add test coverage
-* Add CI build tests
-* Add e2e tests
-* Add coverage report via CI
-* Design example app
-* Use decorators to configure resource entities
-
-
-Bugfixes:
-
-TODO: 
- * After http call errors, no more actions are passed through the stream.
+**Backend**
+* ``npm install -g json-server``
+* ``cd /example-app/backend``
+* ``json-server --watch db.json``
 
 ## Packaging and publishing
 

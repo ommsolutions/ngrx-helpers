@@ -11,10 +11,8 @@ import {AddNotification, CloseModals} from "../actions/ui.actions";
 export class MachinesEffects {
 
     /**
-     * TODO: adjust comment, make utils for allErrors, allSuccess public
-     * Generate the selector for a resource action to use it as ofType selector when attaching further effects to.
-     * In this example we want to let the delete action alongside the load action be handled by the {effectHelperService}
-     * but in addition display a notification.
+     * Generate the selector for a resource action to use it as ofType selector in a @Effect().
+     * Below, for instance, success actions for DeleteOne, UpdateOne and CreateOne are selected.
      */
     private successNotificationSelector = this.effectHelperService.selectAction(MachinesResource, [{
         action: "DeleteOne",
@@ -36,6 +34,9 @@ export class MachinesEffects {
     }, {
         action: "LoadAll",
         variants: ["error"]
+    }, {
+        action: "LoadOne",
+        variants: ["error"]
     }]);
 
     private closeModalSelector = this.effectHelperService.selectAction(MachinesResource, [{
@@ -46,6 +47,10 @@ export class MachinesEffects {
     @Effect()
     genericMachineActions$ = this.effectHelperService.handle(this.actions$, MachinesResource);
 
+    /**
+     * We use the above defined selector to display success notifications for some actions
+     * @type {Observable<AddNotification>}
+     */
     @Effect()
     signalSuccess$ = this.actions$.pipe(
         this.successNotificationSelector, // This is the selector we defined earlier

@@ -50,7 +50,7 @@ export class MachinesComponent implements OnInit, OnDestroy {
             hidden: false,
             type: "action",
             actions: [
-                {icon: "search", fn: this.Navigator.navigateToMachine.bind(this)},
+                {icon: "edit", fn: this.Navigator.navigateToMachine.bind(this)},
                 {icon: "delete", fn: this.deleteMachine.bind(this)}
             ]
         }]
