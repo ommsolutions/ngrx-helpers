@@ -4,7 +4,6 @@ import {NgrxHelpersModule} from "@omm/ngrx-helpers";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {PlantsEffects} from "../../effects";
 import {ANGULAR_IMPORTS, getNgrxImports} from "../../../lib-tests/test-module";
-import {AddMachineComponent} from "./add-machine.component";
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material";
 import {PlantInfoComponent} from "./plant-info.component";
 import SpyObj = jasmine.SpyObj;
