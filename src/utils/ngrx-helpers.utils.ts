@@ -1,5 +1,6 @@
 import {Action} from "@ngrx/store";
 import {GenericAction, GenericActionVariants, GenericResource, IResourceConfig} from "../resource";
+import {GenericActionTypesVariants} from "../resource/generic.resource";
 
 export const MISSING_ACTIONNAME_MSG = "The actionName of the resource is not defined. " +
     "This can lead to ambiguous action types which can break your application! " +
@@ -48,18 +49,16 @@ export class ResourceAction implements Action {
 /**
  * Get an ngrx action object with the correct type and payload, based on the resource and the action.
  *
- * @param resource
- * @param action
- * @param payload
- * @param options
- * @return A action object, with all the required information.
+ * @return An action object, with all the required information.
  */
 export function createAction<Resource extends GenericResource>(resource: new () => Resource,
                                                                action: GenericAction,
                                                                payload?: IPayload,
-                                                               options?: IResourceActionOptions): ResourceAction {
+                                                               options?: IResourceActionOptions,
+                                                               variant?: GenericActionTypesVariants): ResourceAction {
+
     const instance: Resource = new resource();
-    const type = instance.getActionType(action);
+    const type = instance.getActionType(action, variant);
     return {type, action, payload, options};
 }
 

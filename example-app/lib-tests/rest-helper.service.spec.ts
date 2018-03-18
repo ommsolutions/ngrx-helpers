@@ -48,8 +48,8 @@ describe("REST helper service", () => {
     it("Should execute LoadOne action", () => {
         const response = {test: "success"};
         const payload = {id: 5};
-        restHelperService.execute("LoadOne", endpoint, payload)
-            .subscribe((res) => console.log("--> res", res));
+        restHelperService.execute<{ test: string }>("LoadOne", endpoint, payload)
+            .subscribe(res => expect(res.test).toEqual("success"));
 
         const req = httpTestingController.expectOne(fullPath + "/" + payload.id);
         expect(req.request.method).toEqual("GET");
@@ -58,8 +58,8 @@ describe("REST helper service", () => {
 
     it("Should execute LoadAll action", () => {
         const response = [{test: "success"}, {test: "success2"}];
-        restHelperService.execute("LoadAll", endpoint)
-            .subscribe((res) => console.log("--> res", res));
+        restHelperService.execute<{ test: string }[]>("LoadAll", endpoint)
+            .subscribe(res => expect(res[1].test).toEqual("success2"));
 
         const req = httpTestingController.expectOne(fullPath);
         expect(req.request.method).toEqual("GET");
@@ -69,8 +69,8 @@ describe("REST helper service", () => {
     it("Should execute DeleteOne action", () => {
         const response = {msg: "success"};
         const payload = {id: 5};
-        restHelperService.execute("DeleteOne", endpoint, payload)
-            .subscribe((res) => console.log("--> res", res));
+        restHelperService.execute<{ msg: string }>("DeleteOne", endpoint, payload)
+            .subscribe(res => expect(res.msg).toEqual("success"));
 
         const req = httpTestingController.expectOne(fullPath + "/" + payload.id);
         expect(req.request.method).toEqual("DELETE");
@@ -80,8 +80,8 @@ describe("REST helper service", () => {
     it("Should execute UpdateOne action", () => {
         const response = {test: "success"};
         const payload = {id: 5};
-        restHelperService.execute("UpdateOne", endpoint, payload)
-            .subscribe((res) => console.log("--> res", res));
+        restHelperService.execute<{ test: string }>("UpdateOne", endpoint, payload)
+            .subscribe(res => expect(res.test).toEqual("success"));
 
         const req = httpTestingController.expectOne(fullPath + "/" + selectId(<any>payload));
         expect(req.request.method).toEqual("PUT");
@@ -90,8 +90,8 @@ describe("REST helper service", () => {
 
     it("Should execute CreateOne action", () => {
         const payload = {test: "success"};
-        restHelperService.execute("CreateOne", endpoint, payload)
-            .subscribe((res) => console.log("--> res", res));
+        restHelperService.execute<{ test: string }>("CreateOne", endpoint, payload)
+            .subscribe(res => expect(res.test).toEqual("success"));
 
         const req = httpTestingController.expectOne(fullPath);
         expect(req.request.method).toEqual("POST");

@@ -1,5 +1,14 @@
-# 0.1.0-beta.0 Initial release
+# v0.2.0 - More generic createAction function
+* Added variant to createAction param signature
 
-### Features
+# v0.1.0 - Initial Release
 
-### Bugfixes
+## Features
+**Helper functions for:**
+* effects
+* reducers
+* actions (via generic resource)
+
+**Additional Services**
+* dispatch actions
+* request backend

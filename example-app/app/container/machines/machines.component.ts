@@ -1,30 +1,39 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material";
 import {select, Store} from "@ngrx/store";
 import {DispatchService} from "@omm/ngrx-helpers";
-import {Subscription} from "rxjs/Subscription";
 import {tap} from "rxjs/operators/tap";
+import {map} from "rxjs/operators/map";
 
 import {IState, selectAllMachines, selectCloseModal} from "../../reducers";
 import {AddMachineComponent, ITableDefinition} from "../../component";
 import {NavigatorService} from "../../services";
 import {MachinesResource} from "../../resources/machines.resource";
+import {SubscriptionHandler} from "../../utils/";
+import {take} from "rxjs/operators";
 
 @Component({
     selector: "app-machines",
     templateUrl: "machines.component.html",
     styleUrls: ["machines.component.scss"]
 })
-export class MachinesComponent implements OnInit, OnDestroy {
+export class MachinesComponent extends SubscriptionHandler implements OnInit {
 
-    private componentSubscriptions = new Subscription();
+    public parent: number;
+
     public machines$ = this.store.pipe(select(selectAllMachines));
-    public parent;
+    public loadPlant$ = this.route.paramMap.pipe(
+        take(1),
+        map(paramMap => paramMap.get("id")),
+        tap(this.loadSpecificPlant.bind(this))
+    );
 
-    private closeModal$ = this.store.pipe(
+    public closeModal$ = this.store.pipe(
+        this.takeUntilDestroy(),
         select(selectCloseModal),
-        tap(() => this.closeModal()));
+        tap(this.closeModal.bind(this))
+    );
 
     public tableDefinition: ITableDefinition = {
         columns: [{
@@ -57,12 +66,8 @@ export class MachinesComponent implements OnInit, OnDestroy {
     };
 
     ngOnInit(): void {
-        this.componentSubscriptions.add(this.closeModal$.subscribe());
-        this.route.params.pipe(tap(params => this.loadSpecificPlant(params.id))).subscribe();
-    }
-
-    ngOnDestroy(): void {
-        this.componentSubscriptions.unsubscribe();
+        this.loadPlant$.subscribe();
+        this.closeModal$.subscribe();
     }
 
     constructor(private route: ActivatedRoute,
@@ -70,12 +75,13 @@ export class MachinesComponent implements OnInit, OnDestroy {
                 private Navigator: NavigatorService,
                 private store: Store<IState>,
                 private dialog: MatDialog) {
+        super();
     }
 
-    loadSpecificPlant(id?: number) {
+    loadSpecificPlant(id?: string) {
         // decide if all machines should be loaded or just the ones for a specific plant
         if (id != null) {
-            this.parent = id;
+            this.parent = parseInt(id, 10);
             // only load with parent reference
             this.dispatchService.dispatchComplex(MachinesResource, "LoadAll", undefined, {
                 parentRef: id
@@ -83,7 +89,6 @@ export class MachinesComponent implements OnInit, OnDestroy {
         } else {
             this.dispatchService.dispatch(MachinesResource, "LoadAll");
         }
-        this.componentSubscriptions.add(this.machines$.subscribe());
     }
 
     openAddMachineModal() {
