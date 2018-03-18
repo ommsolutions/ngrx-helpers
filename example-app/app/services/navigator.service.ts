@@ -10,23 +10,24 @@ import {Injectable} from "@angular/core";
 export class NavigatorService {
 
     constructor(private store: Store<IState>) {
-
     }
 
     /**
      * Go to previous route.
      */
     public back() {
-        this.store.dispatch(new RouterActions.Back());
+        const action = new RouterActions.Back();
+        this.store.dispatch(action);
     }
 
     /**
      * Go to config route (/config).
      */
     public navigateToConfig() {
-        this.store.dispatch(new RouterActions.Go({
+        const action = new RouterActions.Go({
             path: ["./config"]
-        }));
+        });
+        this.store.dispatch(action);
     }
 
     /**
@@ -34,7 +35,8 @@ export class NavigatorService {
      */
     public navigateToPlants() {
         const path = [`./plants`];
-        this.store.dispatch(new RouterActions.Go({path}));
+        const action = new RouterActions.Go({path});
+        this.store.dispatch(action);
     }
 
     /**
@@ -43,16 +45,19 @@ export class NavigatorService {
      */
     public navigateToPlant(id: number) {
         const path = [`./plants/${id}/machines`];
-        this.store.dispatch(new RouterActions.Go({path}));
+        const action = new RouterActions.Go({path});
+        this.store.dispatch(action);
     }
 
     public navigateToMachine(id: number) {
         const path = [`./machines/${id}`];
-        this.store.dispatch(new RouterActions.Go({path}));
+        const action = new RouterActions.Go({path});
+        this.store.dispatch(action);
     }
 
     public navigateToMachines() {
         const path = [`./machines`];
-        this.store.dispatch(new RouterActions.Go({path}));
+        const action = new RouterActions.Go({path});
+        this.store.dispatch(action);
     }
 }
