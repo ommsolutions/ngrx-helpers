@@ -20,9 +20,9 @@
     "peerDependencies": {
         "@angular/common": "^5.2.0",
         "@angular/core": "^5.2.0",
-        "@ngrx/effects": "^5.0.1",
-        "@ngrx/store": "^5.0.0",
-        "@ngrx/entity": "^5.1.0"
+        "@ngrx/effects": "^5.2.0",
+        "@ngrx/store": "^5.2.0",
+        "@ngrx/entity": "^5.2.0"
     },
     "ngPackage": {
         "lib": {
